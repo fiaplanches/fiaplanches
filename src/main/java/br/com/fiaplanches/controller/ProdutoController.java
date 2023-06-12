@@ -1,5 +1,6 @@
 package br.com.fiaplanches.controller;
 
+import br.com.fiaplanches.enuns.Categoria;
 import br.com.fiaplanches.model.Produto;
 import br.com.fiaplanches.records.*;
 import br.com.fiaplanches.records.RemoveProduto;
@@ -35,11 +36,10 @@ public class ProdutoController {
         return ResponseEntity.created(uri).body(retornoProduto);
     }
 
-    @GetMapping("/{nomeProduto}")
-    public ResponseEntity buscaProdutoPorNome(@PathVariable String nomeProduto){
-        var produto = produtoRepository.findByNomeProduto(nomeProduto);
-        var retornoProduto = new RetornaProduto(produto.getId(), produto.getNomeProduto(), produto.getPreco(), produto.getCategoria());
-        return ResponseEntity.ok(retornoProduto);
+    @GetMapping("/{categoria}")
+    public ResponseEntity buscaPorCategoria(@PathVariable Categoria categoria, @PageableDefault(size = 20) Pageable page){
+        var listaProduto = produtoRepository.findByCategoria(categoria);
+        return ResponseEntity.ok(listaProduto);
     }
 
     @GetMapping("/lista")
