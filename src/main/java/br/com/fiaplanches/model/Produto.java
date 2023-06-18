@@ -3,11 +3,19 @@ package br.com.fiaplanches.model;
 import br.com.fiaplanches.enuns.Categoria;
 import br.com.fiaplanches.records.CadastrarProduto;
 import jakarta.persistence.*;
+import lombok.*;
+import org.hibernate.Hibernate;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 
 @Entity(name = "Produto")
 @Table(name = "produto")
+@Getter
+@Setter
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
 public class Produto {
 
     @Id
@@ -15,12 +23,10 @@ public class Produto {
     private Long id;
     private String nomeProduto;
     private BigDecimal preco;
-
     @Enumerated(EnumType.STRING)
     private Categoria categoria;
 
-    public Produto() {
-    }
+
 
     public Produto(CadastrarProduto cadastrarProduto) {
         this.nomeProduto = cadastrarProduto.nomeProduto();
@@ -30,48 +36,26 @@ public class Produto {
 
     public void atualizaProduto(Produto atualizarProduto) {
         if (atualizarProduto.getNomeProduto() != null) {
-            System.out.println(atualizarProduto.getNomeProduto());
             this.nomeProduto = atualizarProduto.getNomeProduto();
         }
         if (atualizarProduto.getCategoria() != null) {
-            System.out.println(atualizarProduto.getCategoria());
             this.categoria = atualizarProduto.getCategoria();
         }
         if (atualizarProduto.getPreco() != null) {
-            System.out.println(atualizarProduto.getPreco());
             this.preco = atualizarProduto.getPreco();
         }
     }
 
-    public Long getId() {
-        return id;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Produto produto = (Produto) o;
+        return getId() != null && Objects.equals(getId(), produto.getId());
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getNomeProduto() {
-        return nomeProduto;
-    }
-
-    public void setNomeProduto(String nomeProduto) {
-        this.nomeProduto = nomeProduto;
-    }
-
-    public BigDecimal getPreco() {
-        return preco;
-    }
-
-    public void setPreco(BigDecimal preco) {
-        this.preco = preco;
-    }
-
-    public Categoria getCategoria() {
-        return categoria;
-    }
-
-    public void setCategoria(Categoria categoria) {
-        this.categoria = categoria;
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
     }
 }
