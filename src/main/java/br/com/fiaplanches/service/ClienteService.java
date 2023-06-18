@@ -17,11 +17,27 @@ public class ClienteService {
         this.clienteRepository = clienteRepository;
     }
 
+    public RetornoCliente buscaClienteCpf(Long cpf){
+        var cliente = clienteRepository.findByCpf(cpf);
+        return new RetornoCliente(cliente.getId(), cliente.getCpf(), cliente.getNome());
+    }
+
     public RetornoCliente criarCliente(CriarCliente cliente){
         var criaCliente = new Cliente(cliente);
        return new RetornoCliente(clienteRepository.save(criaCliente));
 
     }
 
+    public RetornoCliente updateCliente(CriarCliente updateCliente) {
+        var cliente = clienteRepository.findByCpf(updateCliente.cpf());
+        cliente.setNome(updateCliente.nome());
+        clienteRepository.save(cliente);
+        return new RetornoCliente(cliente);
+    }
+
+    public void removeCliente(CriarCliente removeCliente) {
+        var cliente = clienteRepository.findByCpf(removeCliente.cpf());
+        clienteRepository.delete(cliente);
+    }
 }
 
