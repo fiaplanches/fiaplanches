@@ -38,7 +38,7 @@ public class PedidoService {
         var listaProdutos = produtoRepository.findAllById(idProdutos);
 
         var pedido = pagamentoPedido(new Pedido(cliente, listaProdutos));
-        return new PedidoRecord(pedidoRepository.save(pedido));
+        return new PedidoRecord(pedido);
     }
 
     public Pedido pagamentoPedido(Pedido pedido) {
