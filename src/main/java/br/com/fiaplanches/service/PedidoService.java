@@ -9,6 +9,7 @@ import br.com.fiaplanches.repository.PedidoRepository;
 import br.com.fiaplanches.repository.ProdutoRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -52,4 +53,7 @@ public class PedidoService {
         return pedidoRepository.save(pedido);
     }
 
+    public Page<PedidoRecord> buscarPedidos(Pageable page) {
+        return pedidoRepository.findAll(page).map(PedidoRecord::new);
+    }
 }
