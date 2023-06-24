@@ -31,8 +31,8 @@ public class PedidoController {
     }
 
     @PostMapping
-    public ResponseEntity<Pedido> criarPedido(@RequestBody CriarPedidoRecord pedidoRecord) {
-        Pedido retornoPedido = pedidoService.criarPedido(pedidoRecord);
+    public ResponseEntity<PedidoRecord> criarPedido(@RequestBody CriarPedidoRecord pedidoRecord) {
+        var retornoPedido = pedidoService.criarPedido(pedidoRecord);
         return ResponseEntity.ok(retornoPedido);
     }
 

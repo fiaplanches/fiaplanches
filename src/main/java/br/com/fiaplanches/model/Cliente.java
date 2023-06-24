@@ -2,6 +2,7 @@ package br.com.fiaplanches.model;
 
 import br.com.fiaplanches.records.CriarCliente;
 import br.com.fiaplanches.records.RetornoCliente;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
@@ -36,6 +37,7 @@ public class Cliente {
 
     @OneToMany
     @JoinColumn(name = "cliente_id")
+    @JsonIgnore
     private List<Pedido> pedidos;
 
     public Cliente(CriarCliente cliente) {

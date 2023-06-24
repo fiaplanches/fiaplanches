@@ -31,14 +31,13 @@ public class PedidoService {
     @Autowired
     private MercadoPagoCheckout mercadoPagoCheckout;
 
-    public Pedido criarPedido(CriarPedidoRecord pedidoRecord) {
+    public PedidoRecord criarPedido(CriarPedidoRecord pedidoRecord) {
         var cliente = clienteRepository.findByCpf(pedidoRecord.cpf())
                 .orElseThrow(() -> new EntityNotFoundException("Cliente não encontrado"));
         List<Long> idProdutos = pedidoRecord.produtos();
         var listaProdutos = produtoRepository.findAllById(idProdutos);
-
-        var pedido = pagamentoPedido(new Pedido(cliente, listaProdutos));
-        return pedido;
+        var pagamentoPedido = pagamentoPedido(new Pedido(cliente, listaProdutos));
+        return new PedidoRecord(pagamentoPedido);
     }
 
     public Pedido pagamentoPedido(Pedido pedido) {

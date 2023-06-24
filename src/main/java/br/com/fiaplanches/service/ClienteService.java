@@ -58,8 +58,10 @@ public class ClienteService {
                 pedido -> new PedidoRecord(
                         pedido.getCliente().getCpf(),
                         pedido.getListaProdutosRecord(),
+                        pedido.getStatusPedido(),
                         pedido.getId(),
-                        pedido.getDataPedido() )
+                        pedido.getDataPedido()
+                )
         ).toList();
     }
 }
