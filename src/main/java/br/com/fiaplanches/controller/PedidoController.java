@@ -4,6 +4,9 @@ import br.com.fiaplanches.records.PedidoRecord;
 import br.com.fiaplanches.service.ClienteService;
 import br.com.fiaplanches.service.PedidoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,5 +32,10 @@ public class PedidoController {
     public ResponseEntity<PedidoRecord> criarPedido(@RequestBody PedidoRecord pedidoRecord) {
         PedidoRecord retornoPedido = pedidoService.criarPedido(pedidoRecord);
         return ResponseEntity.ok(retornoPedido);
+    }
+
+    @GetMapping(path = "/todos")
+    public ResponseEntity<Page<PedidoRecord>> buscaPedidos(@PageableDefault Pageable page) {
+        return ResponseEntity.ok(pedidoService.buscarPedidos(page));
     }
 }
