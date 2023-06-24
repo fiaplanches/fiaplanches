@@ -12,4 +12,9 @@ public class TrataErros {
     public ResponseEntity trataErro404(){
         return ResponseEntity.notFound().build();
     }
+
+    @ExceptionHandler(PaymentRefusedException.class)
+    public ResponseEntity trataErroPagamento(){
+        return ResponseEntity.badRequest().build();
+    }
 }

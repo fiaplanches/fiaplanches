@@ -3,8 +3,7 @@ package br.com.fiaplanches.service;
 import br.com.fiaplanches.error.PaymentRefusedException;
 import br.com.fiaplanches.model.Pedido;
 import br.com.fiaplanches.model.Produto;
-import br.com.fiaplanches.records.PedidoRecord;
-import br.com.fiaplanches.records.RetornaProduto;
+import br.com.fiaplanches.records.CriarPedidoRecord;
 import br.com.fiaplanches.repository.ClienteRepository;
 import br.com.fiaplanches.repository.PedidoRepository;
 import br.com.fiaplanches.repository.ProdutoRepository;
@@ -31,15 +30,14 @@ public class PedidoService {
     @Autowired
     private MercadoPagoCheckout mercadoPagoCheckout;
 
-    public PedidoRecord criarPedido(PedidoRecord pedidoRecord) {
+    public Pedido criarPedido(CriarPedidoRecord pedidoRecord) {
         var cliente = clienteRepository.findByCpf(pedidoRecord.cpf())
                 .orElseThrow(() -> new EntityNotFoundException("Cliente não encontrado"));
-        List<Long> idProdutos = pedidoRecord.produtos().stream()
-                .map(RetornaProduto::id).toList();
+        List<Long> idProdutos = pedidoRecord.produtos();
         var listaProdutos = produtoRepository.findAllById(idProdutos);
 
         var pedido = pagamentoPedido(new Pedido(cliente, listaProdutos));
-        return new PedidoRecord(pedido);
+        return pedido;
     }
 
     public Pedido pagamentoPedido(Pedido pedido) {

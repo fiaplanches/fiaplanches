@@ -1,5 +1,7 @@
 package br.com.fiaplanches.controller;
 
+import br.com.fiaplanches.model.Pedido;
+import br.com.fiaplanches.records.CriarPedidoRecord;
 import br.com.fiaplanches.records.PedidoRecord;
 import br.com.fiaplanches.service.ClienteService;
 import br.com.fiaplanches.service.PedidoService;
@@ -29,8 +31,8 @@ public class PedidoController {
     }
 
     @PostMapping
-    public ResponseEntity<PedidoRecord> criarPedido(@RequestBody PedidoRecord pedidoRecord) {
-        PedidoRecord retornoPedido = pedidoService.criarPedido(pedidoRecord);
+    public ResponseEntity<Pedido> criarPedido(@RequestBody CriarPedidoRecord pedidoRecord) {
+        Pedido retornoPedido = pedidoService.criarPedido(pedidoRecord);
         return ResponseEntity.ok(retornoPedido);
     }
 
