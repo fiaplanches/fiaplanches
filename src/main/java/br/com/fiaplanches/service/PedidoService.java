@@ -4,6 +4,7 @@ import br.com.fiaplanches.error.PaymentRefusedException;
 import br.com.fiaplanches.model.Pedido;
 import br.com.fiaplanches.model.Produto;
 import br.com.fiaplanches.records.CriarPedidoRecord;
+import br.com.fiaplanches.records.PedidoRecord;
 import br.com.fiaplanches.repository.ClienteRepository;
 import br.com.fiaplanches.repository.PedidoRepository;
 import br.com.fiaplanches.repository.ProdutoRepository;
