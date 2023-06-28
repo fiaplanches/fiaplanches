@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -29,10 +30,8 @@ public class Cliente {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "CPF não pode ser vazio")
-    @Min(value = 11, message = "CPF deve ter 11 dígitos")
     private Long cpf;
-    @NotBlank(message = "Nome não pode ser vazio")
+
     private String nome;
 
     @OneToMany
@@ -56,7 +55,7 @@ public class Cliente {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
         Cliente cliente = (Cliente) o;
-        return getCpf() != null && Objects.equals(getId(), cliente.getCpf());
+        return getCpf() != 0 && Objects.equals(getId(), cliente.getCpf());
     }
 
     @Override

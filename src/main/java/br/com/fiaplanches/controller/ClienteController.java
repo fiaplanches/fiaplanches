@@ -21,7 +21,7 @@ public class ClienteController {
     @PostMapping("/criarCliente")
     public ResponseEntity<RetornoCliente> criarCliente(@RequestBody @Valid CriarCliente cliente, UriComponentsBuilder uriBuilder){
        RetornoCliente retornoCliente = clienteService.criarCliente(cliente);
-        var uri = uriBuilder.path("/cliente/{cpf}").buildAndExpand(retornoCliente).toUri();
+        var uri = uriBuilder.path("/cliente/{cpf}").buildAndExpand(retornoCliente.cpf()).toUri();
         return ResponseEntity.created(uri).body(retornoCliente);
     }
 
@@ -38,9 +38,9 @@ public class ClienteController {
     }
 
     @Transactional
-    @DeleteMapping("/cpf")
-    public ResponseEntity<String> removeCliente(@RequestBody CriarCliente removeCliente) {
-        clienteService.removeCliente(removeCliente);
+    @DeleteMapping("/{cpf}")
+    public ResponseEntity<String> removeCliente(@PathVariable Long cpf) {
+        clienteService.removeCliente(cpf);
         return ResponseEntity.ok("Usuário excluido com sucesso!");
     }
 

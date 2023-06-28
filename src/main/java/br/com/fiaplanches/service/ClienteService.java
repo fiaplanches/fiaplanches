@@ -1,10 +1,9 @@
 package br.com.fiaplanches.service;
 
+import br.com.fiaplanches.error.BadRequestException;
 import br.com.fiaplanches.model.Cliente;
-import br.com.fiaplanches.model.Produto;
 import br.com.fiaplanches.records.CriarCliente;
 import br.com.fiaplanches.records.PedidoRecord;
-import br.com.fiaplanches.records.RetornaProduto;
 import br.com.fiaplanches.records.RetornoCliente;
 import br.com.fiaplanches.repository.ClienteRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -32,9 +31,13 @@ public class ClienteService {
     }
 
     public RetornoCliente criarCliente(CriarCliente cliente){
-        var criaCliente = new Cliente(cliente);
-       return new RetornoCliente(clienteRepository.save(criaCliente));
+        var newClient = new Cliente(cliente);
 
+        if (clienteRepository.findByCpf(cliente.cpf()).isEmpty()) {
+            return new RetornoCliente(clienteRepository.save(newClient));
+        } else {
+            throw new BadRequestException("CPF ja cadastrado: " + cliente.cpf().toString());
+        }
     }
 
     public RetornoCliente updateCliente(CriarCliente updateCliente) {
@@ -45,8 +48,8 @@ public class ClienteService {
         return new RetornoCliente(cliente);
     }
 
-    public void removeCliente(CriarCliente removeCliente) {
-        var cliente = clienteRepository.findByCpf(removeCliente.cpf())
+    public void removeCliente(Long cpf) {
+        var cliente = clienteRepository.findByCpf(cpf)
                 .orElseThrow(() -> new EntityNotFoundException(CLIENTE_NAO_ENCONTRADO));
         clienteRepository.delete(cliente);
     }
