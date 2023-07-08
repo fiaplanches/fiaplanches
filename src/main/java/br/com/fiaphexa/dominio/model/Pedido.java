@@ -18,11 +18,12 @@ public class Pedido {
 
     private StatusPedido statusPedido;
 
-    public Pedido(Cliente cliente, List<Produto> listaProdutos) {
-        this.produtos = listaProdutos;
+    public Pedido(Long id, Cliente cliente, List<Produto> produtos, LocalDateTime dataPedido, StatusPedido statusPedido) {
+        this.id = id;
         this.cliente = cliente;
-        this.dataPedido = LocalDateTime.now();
-        this.statusPedido = StatusPedido.RECEBIDO;
+        this.produtos = produtos;
+        this.dataPedido = dataPedido;
+        this.statusPedido = statusPedido;
     }
 
     public Pedido() {

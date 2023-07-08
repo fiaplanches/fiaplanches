@@ -1,8 +1,8 @@
 package br.com.fiaphexa.dominio.portas.entrada.produtos;
 
-import br.com.fiaphexa.dominio.model.Produto;
+import br.com.fiaphexa.dominio.dtos.produto.ProdutoDto;
 
 public interface AtualizaProdutoPortaEntrada {
 
-    Produto atualizaProduto(Produto produto);
+    ProdutoDto atualizaProduto(ProdutoDto produtoDTO);
 }

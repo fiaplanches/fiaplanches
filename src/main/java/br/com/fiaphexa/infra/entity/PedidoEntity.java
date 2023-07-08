@@ -1,5 +1,6 @@
 package br.com.fiaphexa.infra.entity;
 
+import br.com.fiaphexa.dominio.dtos.pedido.PedidoDto;
 import br.com.fiaphexa.dominio.enuns.StatusPedido;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -35,4 +36,12 @@ public class PedidoEntity {
 
     @Enumerated(EnumType.STRING)
     private StatusPedido statusPedido;
+
+    public PedidoEntity(PedidoDto pedidoDto) {
+        this.id = pedidoDto.id();
+        this.cliente = new ClienteEntity(pedidoDto.clienteDto());
+        this.produtos = pedidoDto.produtosDtos().stream().map(ProdutoEntity::new).toList();
+        this.dataPedido = pedidoDto.dataPedido();
+        this.statusPedido = pedidoDto.statusPedido();
+    }
 }

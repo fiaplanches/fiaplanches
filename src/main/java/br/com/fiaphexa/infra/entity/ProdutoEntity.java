@@ -1,12 +1,11 @@
 package br.com.fiaphexa.infra.entity;
 
-import br.com.fiaphexa.dominio.model.Produto;
+import br.com.fiaphexa.dominio.dtos.produto.ProdutoDto;
 import br.com.fiaphexa.dominio.enuns.Categoria;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.beans.BeanUtils;
 
 import java.math.BigDecimal;
 
@@ -25,16 +24,19 @@ public class ProdutoEntity {
     @Enumerated(EnumType.STRING)
     private Categoria categoria;
 
-    public ProdutoEntity(Produto produto) {
-        this.id = produto.getId();
-        this.nomeProduto = produto.getNomeProduto();
-        this.preco = produto.getPreco();
-        this.categoria = produto.getCategoria();
+    public ProdutoEntity(ProdutoDto produtoDTO) {
+        this.id = produtoDTO.id();
+        this.nomeProduto = produtoDTO.nomeProduto();
+        this.preco = produtoDTO.preco();
+        this.categoria = produtoDTO.categoria();
     }
 
-    public Produto toProduto() {
-        var produto = new Produto();
-        BeanUtils.copyProperties(this, produto);
-        return produto;
+    public ProdutoDto toProdutoDto() {
+        return new ProdutoDto(
+                this.getId(),
+                this.getNomeProduto(),
+                this.getPreco(),
+                this.getCategoria()
+        );
     }
 }

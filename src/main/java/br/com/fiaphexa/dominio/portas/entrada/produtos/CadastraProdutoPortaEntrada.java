@@ -1,8 +1,8 @@
 package br.com.fiaphexa.dominio.portas.entrada.produtos;
 
-import br.com.fiaphexa.dominio.model.Produto;
+import br.com.fiaphexa.dominio.dtos.produto.ProdutoDto;
 
 public interface CadastraProdutoPortaEntrada {
 
-    Produto cadastrarProduto(Produto produto);
+    ProdutoDto cadastrarProduto(ProdutoDto produtoDTO);
 }
