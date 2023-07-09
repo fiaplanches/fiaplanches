@@ -1,15 +1,15 @@
-package br.com.fiaphexa.aplicacao.usecases.produto;
+package br.com.fiaphexa.aplicacao.services.produto;
 
 import br.com.fiaphexa.dominio.dtos.produto.ProdutoDto;
 import br.com.fiaphexa.dominio.portas.entrada.produtos.AtualizaProdutoPortaEntrada;
 import br.com.fiaphexa.dominio.portas.saida.produto.ProdutoRepositoryPortaSaida;
 import jakarta.persistence.EntityNotFoundException;
 
-public class AtualizaProdutoUseCase implements AtualizaProdutoPortaEntrada {
+public class AtualizaProdutoService implements AtualizaProdutoPortaEntrada {
 
     private final ProdutoRepositoryPortaSaida produtoRepositoryPortaSaida;
 
-    public AtualizaProdutoUseCase(ProdutoRepositoryPortaSaida produtoRepositoryPortaSaida) {
+    public AtualizaProdutoService(ProdutoRepositoryPortaSaida produtoRepositoryPortaSaida) {
         this.produtoRepositoryPortaSaida = produtoRepositoryPortaSaida;
     }
 

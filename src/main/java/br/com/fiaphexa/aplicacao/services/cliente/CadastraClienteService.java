@@ -1,14 +1,14 @@
-package br.com.fiaphexa.aplicacao.usecases.cliente;
+package br.com.fiaphexa.aplicacao.services.cliente;
 
 import br.com.fiaphexa.dominio.dtos.cliente.ClienteDto;
 import br.com.fiaphexa.dominio.portas.entrada.clientes.CadastraClientePortaEntrada;
 import br.com.fiaphexa.dominio.portas.saida.cliente.ClienteRepositoryPortaSaida;
 
-public class CadastraClienteUseCase implements CadastraClientePortaEntrada {
+public class CadastraClienteService implements CadastraClientePortaEntrada {
 
     private final ClienteRepositoryPortaSaida clienteRepositoryPortaSaida;
 
-    public CadastraClienteUseCase(ClienteRepositoryPortaSaida clienteRepositoryPortaSaida) {
+    public CadastraClienteService(ClienteRepositoryPortaSaida clienteRepositoryPortaSaida) {
         this.clienteRepositoryPortaSaida = clienteRepositoryPortaSaida;
     }
 
