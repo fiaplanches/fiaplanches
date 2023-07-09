@@ -1,10 +1,13 @@
-package br.com.fiaphexa.aplicacao.controllers.produto;
+package br.com.fiaphexa.aplicacao.controllers.pedido;
 
 import br.com.fiaphexa.aplicacao.controllers.produto.request.ProdutoRequestDto;
 import br.com.fiaphexa.aplicacao.controllers.produto.request.AtualizaProdutoDto;
 import br.com.fiaphexa.aplicacao.controllers.produto.response.RetornaProdutoDto;
 import br.com.fiaphexa.dominio.enuns.Categoria;
-import br.com.fiaphexa.dominio.portas.entrada.produtos.*;
+import br.com.fiaphexa.dominio.portas.entrada.produtos.AtualizaProdutoPortaEntrada;
+import br.com.fiaphexa.dominio.portas.entrada.produtos.CadastraProdutoPortaEntrada;
+import br.com.fiaphexa.dominio.portas.entrada.produtos.ProcuraProdutoPorCategoriaPortaEntrada;
+import br.com.fiaphexa.dominio.portas.entrada.produtos.RemoveProdutoPortaEntrada;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -12,8 +15,8 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.util.List;
 
 @RestController
-@RequestMapping("produtos")
-public class ProdutoControllerAdapter {
+@RequestMapping("pedidos")
+public class PedidoControllerAdapter {
 
     private final CadastraProdutoPortaEntrada cadastraProdutoPortaEntrada;
 
@@ -23,7 +26,7 @@ public class ProdutoControllerAdapter {
 
     private final RemoveProdutoPortaEntrada removeProdutoPortaEntrada;
 
-    public ProdutoControllerAdapter(
+    public PedidoControllerAdapter(
             CadastraProdutoPortaEntrada cadastraProdutoPortaEntrada,
             AtualizaProdutoPortaEntrada atualizaProdutoPortaEntrada,
             ProcuraProdutoPorCategoriaPortaEntrada procuraProdutoPorCategoriaPortaEntrada,

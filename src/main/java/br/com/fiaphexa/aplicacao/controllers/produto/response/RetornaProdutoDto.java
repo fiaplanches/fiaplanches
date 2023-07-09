@@ -1,4 +1,4 @@
-package br.com.fiaphexa.aplicacao.dtos.produto;
+package br.com.fiaphexa.aplicacao.controllers.produto.response;
 
 import br.com.fiaphexa.dominio.dtos.produto.ProdutoDto;
 import br.com.fiaphexa.dominio.enuns.Categoria;

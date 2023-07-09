@@ -1,4 +1,4 @@
-package br.com.fiaphexa.aplicacao.services.produto;
+package br.com.fiaphexa.dominio.services.produto;
 
 import br.com.fiaphexa.dominio.dtos.produto.ProdutoDto;
 import br.com.fiaphexa.dominio.enuns.Categoria;

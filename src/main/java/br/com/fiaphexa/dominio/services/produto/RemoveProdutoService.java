@@ -1,4 +1,4 @@
-package br.com.fiaphexa.aplicacao.services.produto;
+package br.com.fiaphexa.dominio.services.produto;
 
 import br.com.fiaphexa.dominio.portas.entrada.produtos.RemoveProdutoPortaEntrada;
 import br.com.fiaphexa.dominio.portas.saida.produto.ProdutoRepositoryPortaSaida;

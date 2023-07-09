@@ -1,4 +1,4 @@
-package br.com.fiaphexa.aplicacao.services.cliente;
+package br.com.fiaphexa.dominio.services.cliente;
 
 import br.com.fiaphexa.dominio.dtos.cliente.ClienteDto;
 import br.com.fiaphexa.dominio.portas.entrada.clientes.CadastraClientePortaEntrada;

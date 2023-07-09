@@ -1,10 +1,6 @@
 package br.com.fiaphexa.dominio.dtos.cliente;
 
-import br.com.fiaphexa.dominio.dtos.pedido.PedidoDto;
 import br.com.fiaphexa.dominio.model.Cliente;
-import br.com.fiaphexa.dominio.model.Pedido;
-
-import java.util.List;
 
 public record ClienteDto(
         Long id,

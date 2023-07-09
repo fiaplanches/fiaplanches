@@ -3,12 +3,9 @@ package br.com.fiaphexa.dominio.dtos.pedido;
 import br.com.fiaphexa.dominio.dtos.cliente.ClienteDto;
 import br.com.fiaphexa.dominio.dtos.produto.ProdutoDto;
 import br.com.fiaphexa.dominio.enuns.StatusPedido;
-import br.com.fiaphexa.dominio.model.Cliente;
 import br.com.fiaphexa.dominio.model.Pedido;
-import br.com.fiaphexa.dominio.model.Produto;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 public record PedidoDto(

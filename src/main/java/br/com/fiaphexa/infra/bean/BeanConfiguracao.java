@@ -1,14 +1,14 @@
 package br.com.fiaphexa.infra.bean;
 
-import br.com.fiaphexa.aplicacao.services.cliente.CadastraClienteService;
+import br.com.fiaphexa.dominio.services.cliente.CadastraClienteService;
 import br.com.fiaphexa.dominio.portas.entrada.clientes.CadastraClientePortaEntrada;
 import br.com.fiaphexa.dominio.portas.entrada.produtos.*;
 import br.com.fiaphexa.dominio.portas.saida.cliente.ClienteRepositoryPortaSaida;
 import br.com.fiaphexa.dominio.portas.saida.produto.ProdutoRepositoryPortaSaida;
-import br.com.fiaphexa.aplicacao.services.produto.AtualizaProdutoService;
-import br.com.fiaphexa.aplicacao.services.produto.CadastrarProdutoService;
-import br.com.fiaphexa.aplicacao.services.produto.ProcuraProdutoPorCategoriaService;
-import br.com.fiaphexa.aplicacao.services.produto.RemoveProdutoService;
+import br.com.fiaphexa.dominio.services.produto.AtualizaProdutoService;
+import br.com.fiaphexa.dominio.services.produto.CadastrarProdutoService;
+import br.com.fiaphexa.dominio.services.produto.ProcuraProdutoPorCategoriaService;
+import br.com.fiaphexa.dominio.services.produto.RemoveProdutoService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
