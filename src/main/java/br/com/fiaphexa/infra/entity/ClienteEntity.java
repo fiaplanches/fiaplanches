@@ -1,19 +1,18 @@
 package br.com.fiaphexa.infra.entity;
 
 import br.com.fiaphexa.dominio.dtos.cliente.ClienteDto;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
-import java.util.List;
+import java.util.Objects;
 
 @Entity(name = "Cliente")
 @Table(name = "cliente")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-@Data
+@Getter
+@Setter
+@ToString
 @RequiredArgsConstructor
 @AllArgsConstructor
 public class ClienteEntity {
@@ -22,14 +21,9 @@ public class ClienteEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long cpf;
+    private String cpf;
 
     private String nome;
-
-    @OneToMany
-    @JoinColumn(name = "cliente_id")
-    @JsonIgnore
-    private List<PedidoEntity> pedidoEntities;
 
     public ClienteEntity(ClienteDto clienteDto) {
         this.id = clienteDto.id();
@@ -43,5 +37,18 @@ public class ClienteEntity {
                 this.cpf,
                 this.nome
         );
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ClienteEntity that = (ClienteEntity) o;
+        return Objects.equals(cpf, that.cpf);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(cpf);
     }
 }

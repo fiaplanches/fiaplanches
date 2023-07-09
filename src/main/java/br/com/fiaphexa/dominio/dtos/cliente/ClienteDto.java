@@ -4,15 +4,9 @@ import br.com.fiaphexa.dominio.model.Cliente;
 
 public record ClienteDto(
         Long id,
-        Long cpf,
+        String cpf,
         String nome
 ) {
-
-    public ClienteDto(Long id, Long cpf, String nome) {
-        this.id = id;
-        this.cpf = cpf;
-        this.nome = nome;
-    }
 
     public static ClienteDto toClienteDto(Cliente cliente) {
         return new ClienteDto(
@@ -29,4 +23,5 @@ public record ClienteDto(
                 this.nome
         );
     }
+
 }

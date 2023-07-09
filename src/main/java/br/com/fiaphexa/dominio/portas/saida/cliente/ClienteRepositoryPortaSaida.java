@@ -6,7 +6,9 @@ public interface ClienteRepositoryPortaSaida {
 
     ClienteDto salvaCliente(ClienteDto clienteDto);
 
-    ClienteDto procuraClientePorCpf(Long cpf);
+    ClienteDto procuraClientePorCpf(String cpf);
 
-    void removeCliente(Long id);
+    void removeCliente(String cpf);
+
+    ClienteDto atualizaCliente(ClienteDto clienteDto);
 }

@@ -1,9 +1,9 @@
 package br.com.fiaphexa.infra.bean;
 
-import br.com.fiaphexa.dominio.services.cliente.CadastraClienteService;
-import br.com.fiaphexa.dominio.portas.entrada.clientes.CadastraClientePortaEntrada;
-import br.com.fiaphexa.dominio.portas.entrada.produtos.*;
-import br.com.fiaphexa.dominio.portas.saida.cliente.ClienteRepositoryPortaSaida;
+import br.com.fiaphexa.dominio.portas.entrada.produtos.AtualizaProdutoPortaEntrada;
+import br.com.fiaphexa.dominio.portas.entrada.produtos.CadastraProdutoPortaEntrada;
+import br.com.fiaphexa.dominio.portas.entrada.produtos.ProcuraProdutoPorCategoriaPortaEntrada;
+import br.com.fiaphexa.dominio.portas.entrada.produtos.RemoveProdutoPortaEntrada;
 import br.com.fiaphexa.dominio.portas.saida.produto.ProdutoRepositoryPortaSaida;
 import br.com.fiaphexa.dominio.services.produto.AtualizaProdutoService;
 import br.com.fiaphexa.dominio.services.produto.CadastrarProdutoService;
@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class BeanConfiguracao {
+public class ProdutoBeanConfig {
 
     @Bean
     CadastraProdutoPortaEntrada cadastraProdutoPortaEntrada(ProdutoRepositoryPortaSaida produtoRepositoryPort){
@@ -35,9 +35,6 @@ public class BeanConfiguracao {
         return new RemoveProdutoService(produtoRepositoryPort);
     }
 
-    @Bean
-    CadastraClientePortaEntrada cadastraClientePortaEntrada(ClienteRepositoryPortaSaida clienteRepositoryPortaSaida){
-        return new CadastraClienteService(clienteRepositoryPortaSaida);
-    }
+
 
 }
