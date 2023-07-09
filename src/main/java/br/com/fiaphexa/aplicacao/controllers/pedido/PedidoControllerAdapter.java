@@ -1,64 +1,56 @@
 package br.com.fiaphexa.aplicacao.controllers.pedido;
 
-import br.com.fiaphexa.aplicacao.controllers.produto.request.ProdutoRequestDto;
-import br.com.fiaphexa.aplicacao.controllers.produto.request.AtualizaProdutoDto;
+import br.com.fiaphexa.aplicacao.controllers.pedido.response.BuscaPedidoResponse;
 import br.com.fiaphexa.aplicacao.controllers.produto.response.RetornaProdutoDto;
-import br.com.fiaphexa.dominio.enuns.Categoria;
-import br.com.fiaphexa.dominio.portas.entrada.produtos.AtualizaProdutoPortaEntrada;
-import br.com.fiaphexa.dominio.portas.entrada.produtos.CadastraProdutoPortaEntrada;
-import br.com.fiaphexa.dominio.portas.entrada.produtos.ProcuraProdutoPorCategoriaPortaEntrada;
-import br.com.fiaphexa.dominio.portas.entrada.produtos.RemoveProdutoPortaEntrada;
-import jakarta.validation.Valid;
+import br.com.fiaphexa.dominio.dtos.PageInfoDto;
+import br.com.fiaphexa.dominio.portas.entrada.pedidos.BuscaPedidosClientePortaEntrada;
+import br.com.fiaphexa.dominio.portas.entrada.pedidos.CriaPedidoPortaEntrada;
+import org.springframework.beans.BeanUtils;
+import org.springframework.data.domain.Page;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.util.UriComponentsBuilder;
 
+import java.awt.print.Pageable;
 import java.util.List;
 
 @RestController
 @RequestMapping("pedidos")
 public class PedidoControllerAdapter {
 
-    private final CadastraProdutoPortaEntrada cadastraProdutoPortaEntrada;
+    private final BuscaPedidosClientePortaEntrada buscaPedidosClientePortaEntrada;
+    private final BuscaPedidosPortaEntrada buscaPedidosPortaEntrada;
+    private final CriaPedidoPortaEntrada criaPedidoPortaEntrada;
 
-    private final AtualizaProdutoPortaEntrada atualizaProdutoPortaEntrada;
+    public PedidoControllerAdapter(BuscaPedidosClientePortaEntrada buscaPedidosClientePortaEntrada,
+                                   BuscaPedidosPortaEntrada buscaPedidosPortaEntrada, CriaPedidoPortaEntrada criaPedidoPortaEntrada){
+        this.buscaPedidosClientePortaEntrada = buscaPedidosClientePortaEntrada;
+        this.buscaPedidosPortaEntrada = buscaPedidosPortaEntrada;
+        this.criaPedidoPortaEntrada = bus
 
-    private final ProcuraProdutoPorCategoriaPortaEntrada procuraProdutoPorCategoriaPortaEntrada;
+}
 
-    private final RemoveProdutoPortaEntrada removeProdutoPortaEntrada;
-
-    public PedidoControllerAdapter(
-            CadastraProdutoPortaEntrada cadastraProdutoPortaEntrada,
-            AtualizaProdutoPortaEntrada atualizaProdutoPortaEntrada,
-            ProcuraProdutoPorCategoriaPortaEntrada procuraProdutoPorCategoriaPortaEntrada,
-            RemoveProdutoPortaEntrada removeProdutoPortaEntrada) {
-        this.cadastraProdutoPortaEntrada = cadastraProdutoPortaEntrada;
-        this.atualizaProdutoPortaEntrada = atualizaProdutoPortaEntrada;
-        this.procuraProdutoPorCategoriaPortaEntrada = procuraProdutoPorCategoriaPortaEntrada;
-        this.removeProdutoPortaEntrada = removeProdutoPortaEntrada;
+    @GetMapping("/todos")
+    public List<Page<BuscaPedidoResponse>> buscaPedidos(@PageableDefault Pageable pageable) {
+        PageInfoDto pageInfo = new PageInfoDto();
+        BeanUtils.copyProperties(pageable, pageInfo);
     }
-
-    @GetMapping("/{categoria}")
-    public List<RetornaProdutoDto> buscaPorCategoria(@PathVariable @Valid Categoria categoria) {
-        var produtos = procuraProdutoPorCategoriaPortaEntrada.procura(categoria);
-        return produtos.stream().map(RetornaProdutoDto::new).toList();
-    }
-
-    @PostMapping
-    public RetornaProdutoDto cadastrarProduto(@RequestBody ProdutoRequestDto cadastraProdutoRequest, UriComponentsBuilder uriBuilder) {
-        var produto = cadastraProdutoPortaEntrada.cadastrarProduto(cadastraProdutoRequest.toProduto());
-        var retornoProduto = new RetornaProdutoDto(produto);
-        var uri = uriBuilder.path("/produtos/{nomeProduto}").buildAndExpand((retornoProduto)).toUri();
-        return retornoProduto;
-    }
-
-    @PutMapping
-    public RetornaProdutoDto atualizarProduto(@RequestBody AtualizaProdutoDto atualizaProdutoDto) {
-        return new RetornaProdutoDto(atualizaProdutoPortaEntrada.atualizaProduto(atualizaProdutoDto.toProdutoDto()));
-    }
-
-    @DeleteMapping("/{id}")
-    public String removeProduto(@PathVariable @Valid Long id) {
-        removeProdutoPortaEntrada.remove(id);
-        return "Produto excluido com sucesso";
-    }
+//
+//    @PostMapping
+//    public RetornaProdutoDto cadastrarProduto(@RequestBody ProdutoRequestDto cadastraProdutoRequest, UriComponentsBuilder uriBuilder) {
+//        var produto = cadastraProdutoPortaEntrada.cadastrarProduto(cadastraProdutoRequest.toProduto());
+//        var retornoProduto = new RetornaProdutoDto(produto);
+//        var uri = uriBuilder.path("/produtos/{nomeProduto}").buildAndExpand((retornoProduto)).toUri();
+//        return retornoProduto;
+//    }
+//
+//    @PutMapping
+//    public RetornaProdutoDto atualizarProduto(@RequestBody AtualizaProdutoDto atualizaProdutoDto) {
+//        return new RetornaProdutoDto(atualizaProdutoPortaEntrada.atualizaProduto(atualizaProdutoDto.toProdutoDto()));
+//    }
+//
+//    @DeleteMapping("/{id}")
+//    public String removeProduto(@PathVariable @Valid Long id) {
+//        removeProdutoPortaEntrada.remove(id);
+//        return "Produto excluido com sucesso";
+//    }
 }
