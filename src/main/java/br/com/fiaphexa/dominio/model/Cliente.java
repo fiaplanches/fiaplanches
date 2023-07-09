@@ -1,17 +1,16 @@
 package br.com.fiaphexa.dominio.model;
 
-import java.util.List;
 import java.util.Objects;
 
 public class Cliente {
 
     private Long id;
 
-    private Long cpf;
+    private String cpf;
 
     private String nome;
 
-    public Cliente(Long id, Long cpf, String nome) {
+    public Cliente(Long id, String cpf, String nome) {
         this.id = id;
         this.cpf = cpf;
         this.nome = nome;
@@ -28,11 +27,11 @@ public class Cliente {
         this.id = id;
     }
 
-    public Long getCpf() {
+    public String getCpf() {
         return cpf;
     }
 
-    public void setCpf(Long cpf) {
+    public void setCpf(String cpf) {
         this.cpf = cpf;
     }
 

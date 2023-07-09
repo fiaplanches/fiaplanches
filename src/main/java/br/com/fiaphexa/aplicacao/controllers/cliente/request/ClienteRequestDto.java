@@ -3,7 +3,7 @@ package br.com.fiaphexa.aplicacao.controllers.cliente.request;
 import br.com.fiaphexa.dominio.dtos.cliente.ClienteDto;
 
 public record ClienteRequestDto(
-    Long cpf,
+    String cpf,
     String nome
 ) {
 
