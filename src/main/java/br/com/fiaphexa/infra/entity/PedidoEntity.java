@@ -44,4 +44,21 @@ public class PedidoEntity {
         this.dataPedido = pedidoDto.dataPedido();
         this.statusPedido = pedidoDto.statusPedido();
     }
+
+    public PedidoEntity(ClienteEntity cliente, List<ProdutoEntity> produtos, StatusPedido statusPedido) {
+        this.cliente = cliente;
+        this.produtos = produtos;
+        this.dataPedido = LocalDateTime.now();
+        this.statusPedido = statusPedido;
+    }
+
+    public PedidoDto toPedidoDto() {
+        return new PedidoDto(
+                this.id,
+                this.cliente.toClienteDto(),
+                this.produtos.stream().map(ProdutoEntity::toProdutoDto).toList(),
+                this.dataPedido,
+                this.statusPedido
+        );
+    }
 }

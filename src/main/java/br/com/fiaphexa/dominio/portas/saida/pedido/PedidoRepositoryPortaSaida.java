@@ -1,10 +1,12 @@
 package br.com.fiaphexa.dominio.portas.saida.pedido;
 
+import br.com.fiaphexa.dominio.dtos.PageInfoDto;
 import br.com.fiaphexa.dominio.dtos.pedido.PedidoDto;
-import org.springframework.data.domain.Page;
+
+import java.util.List;
 
 public interface PedidoRepositoryPortaSaida {
     PedidoDto criaPedido(PedidoDto pedidoDto);
-    Page<PedidoDto> buscaPedidosCliente(String cpf);
-
+    List<PedidoDto> buscaPedidosCliente(String cpf, PageInfoDto page);
+    List<PedidoDto> buscaPedidos(PageInfoDto page);
 }

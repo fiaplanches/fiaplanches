@@ -18,15 +18,15 @@ public class Pedido {
 
     private StatusPedido statusPedido;
 
+    public Pedido() {
+    }
+
     public Pedido(Long id, Cliente cliente, List<Produto> produtos, LocalDateTime dataPedido, StatusPedido statusPedido) {
         this.id = id;
         this.cliente = cliente;
         this.produtos = produtos;
         this.dataPedido = dataPedido;
         this.statusPedido = statusPedido;
-    }
-
-    public Pedido() {
     }
 
     public Long getId() {

@@ -2,21 +2,21 @@ package br.com.fiaphexa.dominio.services.pedido;
 
 import br.com.fiaphexa.dominio.dtos.PageInfoDto;
 import br.com.fiaphexa.dominio.dtos.pedido.PedidoDto;
-import br.com.fiaphexa.dominio.portas.entrada.pedidos.BuscaPedidosPortaEntrada;
+import br.com.fiaphexa.dominio.portas.entrada.pedidos.BuscaPedidosClientePortaEntrada;
 import br.com.fiaphexa.dominio.portas.saida.pedido.PedidoRepositoryPortaSaida;
 
 import java.util.List;
 
-public class BuscaPedidosService implements BuscaPedidosPortaEntrada {
+public class BuscaPedidosClienteService implements BuscaPedidosClientePortaEntrada {
 
     private final PedidoRepositoryPortaSaida pedidoRepositoryPortaSaida;
 
-    public BuscaPedidosService(PedidoRepositoryPortaSaida pedidoRepositoryPortaSaida) {
+    public BuscaPedidosClienteService(PedidoRepositoryPortaSaida pedidoRepositoryPortaSaida) {
         this.pedidoRepositoryPortaSaida = pedidoRepositoryPortaSaida;
     }
 
     @Override
-    public List<PedidoDto> buscaPedidos(PageInfoDto page) {
-        return pedidoRepositoryPortaSaida.buscaPedidos(page);
+    public List<PedidoDto> buscaPedidosCliente(String cpf, PageInfoDto page) {
+        return pedidoRepositoryPortaSaida.buscaPedidosCliente(cpf, page);
     }
 }
