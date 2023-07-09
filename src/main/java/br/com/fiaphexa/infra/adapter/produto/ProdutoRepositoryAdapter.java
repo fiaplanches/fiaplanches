@@ -13,34 +13,34 @@ import java.util.Optional;
 @Component
 public class ProdutoRepositoryAdapter implements ProdutoRepositoryPortaSaida {
 
-    private final PostGresProdutoRepository springProdutoRepository;
+    private final PostGresProdutoRepository postGresProdutoRepository;
 
-    public ProdutoRepositoryAdapter(PostGresProdutoRepository springProdutoRepository){
-        this.springProdutoRepository = springProdutoRepository;
+    public ProdutoRepositoryAdapter(PostGresProdutoRepository postGresProdutoRepository){
+        this.postGresProdutoRepository = postGresProdutoRepository;
     }
 
     @Override
     public List<ProdutoDto> procuraProdutoPorCategoria(Categoria categoria) {
-        List<ProdutoEntity> produtoEntity = this.springProdutoRepository.findByCategoria(categoria);
+        List<ProdutoEntity> produtoEntity = this.postGresProdutoRepository.findByCategoria(categoria);
         return produtoEntity.stream().map(ProdutoEntity::toProdutoDto).toList();
     }
 
     @Override
     public ProdutoDto salvaProduto(ProdutoDto produtoDTO){
         ProdutoEntity produtoEntity = new ProdutoEntity(produtoDTO);
-        var produtoEntitySave = this.springProdutoRepository.save(produtoEntity);
+        var produtoEntitySave = this.postGresProdutoRepository.save(produtoEntity);
         return produtoEntitySave.toProdutoDto();
     }
 
     @Override
     public void removeProduto(ProdutoDto produtoDTO) {
         var produtoEntity = new ProdutoEntity(produtoDTO);
-        springProdutoRepository.delete(produtoEntity);
+        postGresProdutoRepository.delete(produtoEntity);
     }
 
     @Override
     public Optional<ProdutoDto> procuraProdutoPorId(Long id) {
-        var produtoEntity = springProdutoRepository.findById(id);
+        var produtoEntity = postGresProdutoRepository.findById(id);
         return produtoEntity.map(ProdutoEntity::toProdutoDto);
     }
 }
