@@ -6,6 +6,7 @@ import br.com.fiaphexa.aplicacao.controllers.produto.response.RetornaProdutoDto;
 import br.com.fiaphexa.dominio.enuns.Categoria;
 import br.com.fiaphexa.dominio.portas.entrada.produtos.*;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -35,13 +36,13 @@ public class ProdutoControllerAdapter {
     }
 
     @GetMapping("/{categoria}")
-    public List<RetornaProdutoDto> buscaPorCategoria(@PathVariable @Valid Categoria categoria) {
+    public List<RetornaProdutoDto> buscaPorCategoria(@PathVariable Categoria categoria) {
         var produtos = procuraProdutoPorCategoriaPortaEntrada.procura(categoria);
         return produtos.stream().map(RetornaProdutoDto::new).toList();
     }
 
     @PostMapping
-    public RetornaProdutoDto cadastrarProduto(@RequestBody ProdutoRequestDto cadastraProdutoRequest, UriComponentsBuilder uriBuilder) {
+    public RetornaProdutoDto cadastrarProduto(@RequestBody @Valid ProdutoRequestDto cadastraProdutoRequest, UriComponentsBuilder uriBuilder) {
         var produto = cadastraProdutoPortaEntrada.cadastrarProduto(cadastraProdutoRequest.toProduto());
         var retornoProduto = new RetornaProdutoDto(produto);
         var uri = uriBuilder.path("/produtos/{nomeProduto}").buildAndExpand((retornoProduto)).toUri();
@@ -49,7 +50,7 @@ public class ProdutoControllerAdapter {
     }
 
     @PutMapping
-    public RetornaProdutoDto atualizarProduto(@RequestBody AtualizaProdutoDto atualizaProdutoDto) {
+    public RetornaProdutoDto atualizarProduto(@RequestBody @Valid AtualizaProdutoDto atualizaProdutoDto) {
         return new RetornaProdutoDto(atualizaProdutoPortaEntrada.atualizaProduto(atualizaProdutoDto.toProdutoDto()));
     }
 
