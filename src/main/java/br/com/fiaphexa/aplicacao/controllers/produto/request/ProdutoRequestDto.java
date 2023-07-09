@@ -2,16 +2,23 @@ package br.com.fiaphexa.aplicacao.controllers.produto.request;
 
 import br.com.fiaphexa.dominio.dtos.produto.ProdutoDto;
 import br.com.fiaphexa.dominio.enuns.Categoria;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 import java.math.BigDecimal;
 
 public record ProdutoRequestDto(
-        @NotBlank
+        @NotBlank(message = "Nome do produto não pode ser vazio")
         String nomeProduto,
-        @NotBlank
+        @NotNull(message = "Preço não pode ser vazio")
+        @DecimalMin(value = "0.0", inclusive = false, message = "Preço deve ser maior que 0")
         BigDecimal preco,
-        @NotBlank
+        @NotNull(message = "Categoria nao pode ser vazio")
+        @Enumerated(EnumType.STRING)
         Categoria categoria
 ) {
     public ProdutoDto toProduto() {
