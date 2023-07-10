@@ -14,9 +14,11 @@ public class CadastraClienteService implements CadastraClientePortaEntrada {
 
     @Override
     public ClienteDto cadastra(ClienteDto clienteDto) {
-        if (clienteRepositoryPortaSaida.procuraClientePorCpf(clienteDto.cpf()) != null) {
-            throw new RuntimeException("Cliente já cadastrado");
+        var cliente = clienteRepositoryPortaSaida.procuraClientePorCpf(clienteDto.cpf());
+        if (cliente.isEmpty()) {
+            return clienteRepositoryPortaSaida.salvaCliente(clienteDto);
+        } else {
+            throw new RuntimeException("Cliente ja cadastrado");
         }
-        return clienteRepositoryPortaSaida.salvaCliente(clienteDto);
     }
 }

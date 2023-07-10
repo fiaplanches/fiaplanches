@@ -15,4 +15,6 @@ public interface ProdutoRepositoryPortaSaida {
     void removeProduto(ProdutoDto produtoDTO);
 
     Optional<ProdutoDto> procuraProdutoPorId(Long id);
+
+    List<ProdutoDto> procuraProdutosPorId(List<Long> ids);
 }

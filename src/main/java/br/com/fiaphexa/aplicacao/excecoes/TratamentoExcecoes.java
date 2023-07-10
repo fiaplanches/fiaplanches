@@ -29,6 +29,19 @@ public class TratamentoExcecoes {
         );
     }
 
+    @ExceptionHandler(RuntimeException.class)
+    public ResponseEntity<MessageDefaultExceptionHandler> handlerNotFoundException(RuntimeException exception){
+        return new ResponseEntity<>(
+                new MessageDefaultExceptionHandler(
+                        exception.getMessage(),
+                        HttpStatus.NOT_FOUND.value(),
+                        HttpStatus.NOT_FOUND.getReasonPhrase(),
+                        new Date()
+                ),
+                HttpStatus.NOT_FOUND
+        );
+    }
+
     @ExceptionHandler(PaymentRefusedException.class)
     public ResponseEntity<MessageDefaultExceptionHandler> handlerPaymentRefusedException(PaymentRefusedException exception) {
         return new ResponseEntity<>(

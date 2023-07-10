@@ -3,8 +3,10 @@ package br.com.fiaphexa.infra.bean;
 import br.com.fiaphexa.dominio.portas.entrada.pedidos.BuscaPedidosClientePortaEntrada;
 import br.com.fiaphexa.dominio.portas.entrada.pedidos.BuscaPedidosPortaEntrada;
 import br.com.fiaphexa.dominio.portas.entrada.pedidos.CriaPedidoPortaEntrada;
+import br.com.fiaphexa.dominio.portas.saida.cliente.ClienteRepositoryPortaSaida;
 import br.com.fiaphexa.dominio.portas.saida.pedido.PedidoPagamentoPortaSaida;
 import br.com.fiaphexa.dominio.portas.saida.pedido.PedidoRepositoryPortaSaida;
+import br.com.fiaphexa.dominio.portas.saida.produto.ProdutoRepositoryPortaSaida;
 import br.com.fiaphexa.dominio.services.pedido.BuscaPedidosClienteService;
 import br.com.fiaphexa.dominio.services.pedido.BuscaPedidosService;
 import br.com.fiaphexa.dominio.services.pedido.CriarPedidosService;
@@ -26,8 +28,15 @@ public class PedidoBeanConfig {
     }
 
     @Bean
-    public CriaPedidoPortaEntrada criaPedidoPortaEntrada(PedidoRepositoryPortaSaida pedidoRepositoryPortaSaida){
-        return new CriarPedidosService(pedidoRepositoryPortaSaida);
+    public CriaPedidoPortaEntrada criaPedidoPortaEntrada(
+            PedidoRepositoryPortaSaida pedidoRepositoryPortaSaida,
+            ClienteRepositoryPortaSaida clienteRepositoryPortaSaida,
+            ProdutoRepositoryPortaSaida produtoRepositoryPortaSaida,
+            PedidoPagamentoPortaSaida pedidoPagamentoPortaSaida
+    ){
+        return new CriarPedidosService(
+                pedidoRepositoryPortaSaida, clienteRepositoryPortaSaida, produtoRepositoryPortaSaida,
+                pedidoPagamentoPortaSaida);
     }
 
     @Bean

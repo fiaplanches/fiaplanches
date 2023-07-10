@@ -20,6 +20,5 @@ public class PedidoPagamentoAdapter implements PedidoPagamentoPortaSaida {
 
         return new CheckoutPedidoDto(true, "Payment successful.");
     }
-
 }
 

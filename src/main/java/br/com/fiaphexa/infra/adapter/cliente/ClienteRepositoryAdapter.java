@@ -7,6 +7,8 @@ import br.com.fiaphexa.infra.repository.PostGresClienteRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
+
 @Component
 public class ClienteRepositoryAdapter implements ClienteRepositoryPortaSaida {
 
@@ -25,10 +27,8 @@ public class ClienteRepositoryAdapter implements ClienteRepositoryPortaSaida {
     }
 
     @Override
-    public ClienteDto procuraClientePorCpf(String cpf) {
-        return postGresClienteRepository.findByCpf(cpf)
-                .map(ClienteEntity::toClienteDto)
-                .orElseThrow(() -> new EntityNotFoundException(CLIENTE_NAO_ENCONTRADO));
+    public Optional<ClienteDto> procuraClientePorCpf(String cpf) {
+        return postGresClienteRepository.findByCpf(cpf).map(ClienteEntity::toClienteDto);
     }
 
     @Override

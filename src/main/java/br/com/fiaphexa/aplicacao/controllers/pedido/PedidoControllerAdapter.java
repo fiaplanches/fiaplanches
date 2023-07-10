@@ -1,10 +1,12 @@
 package br.com.fiaphexa.aplicacao.controllers.pedido;
 
+import br.com.fiaphexa.aplicacao.controllers.pedido.request.CriaPedidoRequestDto;
 import br.com.fiaphexa.dominio.dtos.PageInfoDto;
 import br.com.fiaphexa.dominio.dtos.pedido.PedidoDto;
 import br.com.fiaphexa.dominio.portas.entrada.pedidos.BuscaPedidosClientePortaEntrada;
 import br.com.fiaphexa.dominio.portas.entrada.pedidos.BuscaPedidosPortaEntrada;
 import br.com.fiaphexa.dominio.portas.entrada.pedidos.CriaPedidoPortaEntrada;
+import jakarta.validation.Valid;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -54,8 +56,8 @@ public class PedidoControllerAdapter {
     }
 
     @PostMapping()
-    public ResponseEntity<PedidoDto> criaPedido(PedidoDto pedidoDto) {
-        PedidoDto pedido = criaPedidoPortaEntrada.criaPedido(pedidoDto);
+    public ResponseEntity<PedidoDto> criaPedido(@RequestBody @Valid CriaPedidoRequestDto criaPedidoRequestDto) {
+        PedidoDto pedido = criaPedidoPortaEntrada.criaPedido(CriaPedidoRequestDto.toPedidoComIdProdutosDto(criaPedidoRequestDto));
         return ResponseEntity.status(HttpStatus.CREATED).body(pedido);
     }
 }

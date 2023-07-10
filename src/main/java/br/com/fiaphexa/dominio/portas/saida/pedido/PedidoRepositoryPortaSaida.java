@@ -6,7 +6,7 @@ import br.com.fiaphexa.dominio.dtos.pedido.PedidoDto;
 import java.util.List;
 
 public interface PedidoRepositoryPortaSaida {
-    PedidoDto criaPedido(PedidoDto pedidoDto);
     List<PedidoDto> buscaPedidosCliente(String cpf, PageInfoDto page);
     List<PedidoDto> buscaPedidos(PageInfoDto page);
+    PedidoDto salvaPedido(PedidoDto pedidoDto);
 }

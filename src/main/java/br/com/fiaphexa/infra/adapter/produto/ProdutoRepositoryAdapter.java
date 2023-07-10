@@ -43,4 +43,10 @@ public class ProdutoRepositoryAdapter implements ProdutoRepositoryPortaSaida {
         var produtoEntity = postGresProdutoRepository.findById(id);
         return produtoEntity.map(ProdutoEntity::toProdutoDto);
     }
+
+    @Override
+    public List<ProdutoDto> procuraProdutosPorId(List<Long> id) {
+        var produtoEntitys = postGresProdutoRepository.findAllById(id);
+        return produtoEntitys.stream().map(ProdutoEntity::toProdutoDto).toList();
+    }
 }

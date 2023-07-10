@@ -38,7 +38,7 @@ public class ClienteControllerAdapter {
 
     @GetMapping(path = "/{cpf}")
     public ResponseEntity<ClienteResponseDto> buscaClienteCpf(@PathVariable String cpf) {
-        return ResponseEntity.ok(ClienteResponseDto.toClienteResponseDto(procuraClientePortaEntrada.procuraByCpf(cpf)));
+        return ResponseEntity.ok(ClienteResponseDto.toClienteResponseDto(procuraClientePortaEntrada.procuraPorCpf(cpf)));
     }
 
     @PutMapping(path = "/cpf")
