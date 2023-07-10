@@ -43,3 +43,9 @@ Neste projeto, incluímos uma pasta chamada `PrintScreens` na raiz do projeto. E
 É importante ressaltar que esses erros ocorrem apenas em aproximadamente 5% das vezes e são simulados para simular a instabilidade do sistema. Se você fizer uma nova requisição, a aplicação funcionará normalmente.
 
 Se você encontrar algum desses erros durante a execução da aplicação, não se preocupe, é apenas uma simulação e não indica um problema real.
+
+## Debitos Técnicos
+
+Devido a estarmos com o desenvolvimento do sistema em andamento, possuímos alguns debitos técnicos ja identificados, sendo eles:
+- Caso o Cliente possua um Pedido Em Andamento, não é possivel excluir este cliente da Base, onde devidoa a isto, estoura uma exceção no Response do endpoint de Delete do Cliente: cliente/{cpf}, uma imagem demonstrando o debito tecnico em questão está anexada a pasta PrintScreens na raiz do Repositorio.
+
