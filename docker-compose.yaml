@@ -14,18 +14,18 @@ services:
     networks:
       - fiap-lanchonete-network
         
-#  fiap-lancher:
-#    build:
-#      context: .
-#      dockerfile: Dockerfile
-#    ports:
-#      - 8080:8080
-#    volumes:
-#      - fiap-lancher:/var/lib/fiaplancher/data
-#    depends_on:
-#      - postgres-db
-#    networks:
-#      - fiap-lanchonete-network
+  fiap-lancher:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    ports:
+      - 8080:8080
+    volumes:
+      - fiap-lancher:/var/lib/fiaplancher/data
+    depends_on:
+      - postgres-db
+    networks:
+      - fiap-lanchonete-network
 
 networks:
   fiap-lanchonete-network:
@@ -34,5 +34,5 @@ networks:
 volumes:
   postgres-db:
     driver: local
-#  fiap-lancher:
-#    driver: local
+  fiap-lancher:
+    driver: local
