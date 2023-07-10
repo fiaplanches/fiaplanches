@@ -8,6 +8,8 @@ import br.com.fiaphexa.dominio.portas.entrada.clientes.ProcuraClientePortaEntrad
 import br.com.fiaphexa.dominio.portas.entrada.clientes.RemoveClientePortaEntrada;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
+import org.hibernate.validator.constraints.br.CPF;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -37,18 +39,28 @@ public class ClienteControllerAdapter {
     }
 
     @GetMapping(path = "/{cpf}")
-    public ResponseEntity<ClienteResponseDto> buscaClienteCpf(@PathVariable String cpf) {
+    public ResponseEntity<ClienteResponseDto> buscaClienteCpf(
+            @PathVariable
+            @NotBlank(message = "Número do CPF não pode ser vazio")
+            @CPF(message = "CPF informado invalido")
+            String cpf
+    ) {
         return ResponseEntity.ok(ClienteResponseDto.toClienteResponseDto(procuraClientePortaEntrada.procuraPorCpf(cpf)));
     }
 
     @PutMapping(path = "/cpf")
-    public ResponseEntity<ClienteResponseDto> updateCliente(@RequestBody ClienteRequestDto updateCliente) {
+    public ResponseEntity<ClienteResponseDto> updateCliente(@RequestBody @Valid ClienteRequestDto updateCliente) {
         return ResponseEntity.ok(ClienteResponseDto.toClienteResponseDto(atualizaClientePortaEntrada.atualiza(updateCliente.toClienteDto())));
     }
 
     @Transactional
     @DeleteMapping("/{cpf}")
-    public ResponseEntity<String> removeCliente(@PathVariable String cpf) {
+    public ResponseEntity<String> removeCliente(
+            @PathVariable
+            @NotBlank(message = "Número do CPF não pode ser vazio")
+            @CPF(message = "CPF informado invalido")
+            String cpf
+    ) {
         removeClientePortaEntrada.remove(cpf);
         return ResponseEntity.ok("Usuário excluido com sucesso!");
     }

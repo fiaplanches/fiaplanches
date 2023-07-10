@@ -5,6 +5,7 @@ import br.com.fiaphexa.dominio.portas.saida.cliente.ClienteRepositoryPortaSaida;
 import br.com.fiaphexa.infra.entity.ClienteEntity;
 import br.com.fiaphexa.infra.repository.PostGresClienteRepository;
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
@@ -39,10 +40,12 @@ public class ClienteRepositoryAdapter implements ClienteRepositoryPortaSaida {
     }
 
     public ClienteDto atualizaCliente(ClienteDto clienteDto) {
-        if (!postGresClienteRepository.existsById(clienteDto.id())) {
-            throw new EntityNotFoundException(CLIENTE_NAO_ENCONTRADO);
-        }
-        var clienteEntity = postGresClienteRepository.save(new ClienteEntity(clienteDto));
-        return clienteEntity.toClienteDto();
+
+        var clienteEntity = postGresClienteRepository.findByCpf(clienteDto.cpf()).orElseThrow(
+                () -> new EntityNotFoundException(CLIENTE_NAO_ENCONTRADO)
+        );
+        BeanUtils.copyProperties(clienteDto, clienteEntity, "id");
+        var clienteEntityAtualizado = postGresClienteRepository.save(clienteEntity);
+        return clienteEntityAtualizado.toClienteDto();
     }
 }
