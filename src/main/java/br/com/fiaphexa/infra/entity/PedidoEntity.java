@@ -3,6 +3,8 @@ package br.com.fiaphexa.infra.entity;
 import br.com.fiaphexa.dominio.dtos.pedido.PedidoDto;
 import br.com.fiaphexa.dominio.enuns.StatusPedido;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jdk.jfr.BooleanFlag;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -37,19 +39,24 @@ public class PedidoEntity {
     @Enumerated(EnumType.STRING)
     private StatusPedido statusPedido;
 
+    @NotNull
+    private Boolean isApproved;
+
     public PedidoEntity(PedidoDto pedidoDto) {
         this.id = pedidoDto.id();
         this.cliente = new ClienteEntity(pedidoDto.clienteDto());
         this.produtos = pedidoDto.produtosDtos().stream().map(ProdutoEntity::new).toList();
         this.dataPedido = pedidoDto.dataPedido();
         this.statusPedido = pedidoDto.statusPedido();
+        this.isApproved = pedidoDto.isApproved();
     }
 
-    public PedidoEntity(ClienteEntity cliente, List<ProdutoEntity> produtos, StatusPedido statusPedido) {
+    public PedidoEntity(ClienteEntity cliente, List<ProdutoEntity> produtos, StatusPedido statusPedido, Boolean isApproved) {
         this.cliente = cliente;
         this.produtos = produtos;
         this.dataPedido = LocalDateTime.now();
         this.statusPedido = statusPedido;
+        this.isApproved = isApproved;
     }
 
     public PedidoDto toPedidoDto() {
@@ -58,7 +65,8 @@ public class PedidoEntity {
                 this.cliente.toClienteDto(),
                 this.produtos.stream().map(ProdutoEntity::toProdutoDto).toList(),
                 this.dataPedido,
-                this.statusPedido
+                this.statusPedido,
+                this.isApproved
         );
     }
 }

@@ -13,15 +13,17 @@ public record PedidoDto(
         ClienteDto clienteDto,
         List<ProdutoDto> produtosDtos,
         LocalDateTime dataPedido,
-        StatusPedido statusPedido
+        StatusPedido statusPedido,
+        Boolean isApproved
 ) {
 
-    public PedidoDto(Long id, ClienteDto clienteDto, List<ProdutoDto> produtosDtos, LocalDateTime dataPedido, StatusPedido statusPedido) {
+    public PedidoDto(Long id, ClienteDto clienteDto, List<ProdutoDto> produtosDtos, LocalDateTime dataPedido, StatusPedido statusPedido, Boolean isApproved) {
         this.id = id;
         this.clienteDto = clienteDto;
         this.produtosDtos = produtosDtos;
         this.dataPedido = dataPedido;
         this.statusPedido = statusPedido;
+        this.isApproved = isApproved;
     }
 
     public static PedidoDto toPedidoDto(Pedido pedido) {
@@ -30,7 +32,8 @@ public record PedidoDto(
                 ClienteDto.toClienteDto(pedido.getCliente()),
                 pedido.getProdutos().stream().map(ProdutoDto::toProdutoDto).toList(),
                 pedido.getDataPedido(),
-                pedido.getStatusPedido()
+                pedido.getStatusPedido(),
+                pedido.getApproved()
         );
     }
 
@@ -40,7 +43,8 @@ public record PedidoDto(
                 this.clienteDto.toCliente(),
                 this.produtosDtos.stream().map(ProdutoDto::toProduto).toList(),
                 this.dataPedido,
-                this.statusPedido
+                this.statusPedido,
+                this.isApproved
         );
     }
 }

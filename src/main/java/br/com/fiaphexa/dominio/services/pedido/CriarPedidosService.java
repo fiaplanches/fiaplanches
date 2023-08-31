@@ -47,7 +47,8 @@ public class CriarPedidosService implements CriaPedidoPortaEntrada {
                 clienteDto.toCliente(),
                 listaProdutos.stream().map(ProdutoDto::toProduto).toList(),
                 LocalDateTime.now(),
-                StatusPedido.RECEBIDO
+                StatusPedido.RECEBIDO,
+                Boolean.FALSE
         );
         return pagamentoPedido(pedido);
     }
@@ -70,7 +71,7 @@ public class CriarPedidosService implements CriaPedidoPortaEntrada {
                         produto.getCategoria()
                 ))
                 .toList();
-        var pedidoDto = new PedidoDto(pedido.getId(), clienteDto, produtoDtos, pedido.getDataPedido(), pedido.getStatusPedido());
+        var pedidoDto = new PedidoDto(pedido.getId(), clienteDto, produtoDtos, pedido.getDataPedido(), pedido.getStatusPedido(), pedido.getApproved());
         return pedidoRepositoryPortaSaida.salvaPedido(pedidoDto);
     }
 

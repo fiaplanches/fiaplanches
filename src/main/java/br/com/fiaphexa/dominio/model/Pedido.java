@@ -2,6 +2,7 @@ package br.com.fiaphexa.dominio.model;
 
 import br.com.fiaphexa.dominio.enuns.StatusPedido;
 
+import javax.swing.text.StyledEditorKit;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
@@ -18,15 +19,18 @@ public class Pedido {
 
     private StatusPedido statusPedido;
 
+    private Boolean isApproved = false;
+
     public Pedido() {
     }
 
-    public Pedido(Long id, Cliente cliente, List<Produto> produtos, LocalDateTime dataPedido, StatusPedido statusPedido) {
+    public Pedido(Long id, Cliente cliente, List<Produto> produtos, LocalDateTime dataPedido, StatusPedido statusPedido, Boolean isApproved) {
         this.id = id;
         this.cliente = cliente;
         this.produtos = produtos;
         this.dataPedido = dataPedido;
         this.statusPedido = statusPedido;
+        this.isApproved = isApproved;
     }
 
     public Long getId() {
@@ -67,6 +71,14 @@ public class Pedido {
 
     public void setStatusPedido(StatusPedido statusPedido) {
         this.statusPedido = statusPedido;
+    }
+
+    public Boolean getApproved() {
+        return isApproved;
+    }
+
+    public void setApproved(Boolean approved) {
+        isApproved = approved;
     }
 
     @Override
