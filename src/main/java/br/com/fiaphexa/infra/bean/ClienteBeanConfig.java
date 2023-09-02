@@ -1,14 +1,14 @@
 package br.com.fiaphexa.infra.bean;
 
-import br.com.fiaphexa.dominio.portas.entrada.clientes.AtualizaClientePortaEntrada;
-import br.com.fiaphexa.dominio.portas.entrada.clientes.CadastraClientePortaEntrada;
-import br.com.fiaphexa.dominio.portas.entrada.clientes.ProcuraClientePortaEntrada;
-import br.com.fiaphexa.dominio.portas.entrada.clientes.RemoveClientePortaEntrada;
-import br.com.fiaphexa.dominio.portas.saida.cliente.ClienteRepositoryPortaSaida;
-import br.com.fiaphexa.dominio.services.cliente.AtualizaClienteService;
-import br.com.fiaphexa.dominio.services.cliente.CadastraClienteService;
-import br.com.fiaphexa.dominio.services.cliente.ProcuraClienteService;
-import br.com.fiaphexa.dominio.services.cliente.RemoveClienteService;
+import br.com.fiaphexa.aplicacao.casosdeuso.abstracoes.clientes.AtualizaClienteCasoDeUso;
+import br.com.fiaphexa.aplicacao.casosdeuso.abstracoes.clientes.CadastraClienteCasoDeUso;
+import br.com.fiaphexa.aplicacao.casosdeuso.abstracoes.clientes.ProcuraClienteCasoDeUso;
+import br.com.fiaphexa.aplicacao.casosdeuso.abstracoes.clientes.RemoveClienteCasoDeUso;
+import br.com.fiaphexa.aplicacao.repositorios.cliente.ClienteRepositoryService;
+import br.com.fiaphexa.aplicacao.casosdeuso.cliente.AtualizaClienteCasoDeUsoImpl;
+import br.com.fiaphexa.aplicacao.casosdeuso.cliente.CadastraClienteCasoDeUsoImpl;
+import br.com.fiaphexa.aplicacao.casosdeuso.cliente.ProcuraClienteCasoDeUsoImpl;
+import br.com.fiaphexa.aplicacao.casosdeuso.cliente.RemoveClienteCasoDeUsoImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -16,22 +16,22 @@ import org.springframework.context.annotation.Configuration;
 public class ClienteBeanConfig {
 
     @Bean
-    CadastraClientePortaEntrada cadastraClientePortaEntrada(ClienteRepositoryPortaSaida clienteRepositoryPortaSaida){
-        return new CadastraClienteService(clienteRepositoryPortaSaida);
+    CadastraClienteCasoDeUso cadastraClientePortaEntrada(ClienteRepositoryService clienteRepositoryService){
+        return new CadastraClienteCasoDeUsoImpl(clienteRepositoryService);
     }
 
     @Bean
-    AtualizaClientePortaEntrada atualizaClientePortaEntrada(ClienteRepositoryPortaSaida clienteRepositoryPortaSaida){
-        return new AtualizaClienteService(clienteRepositoryPortaSaida);
+    AtualizaClienteCasoDeUso atualizaClientePortaEntrada(ClienteRepositoryService clienteRepositoryService){
+        return new AtualizaClienteCasoDeUsoImpl(clienteRepositoryService);
     }
 
     @Bean
-    RemoveClientePortaEntrada removeClientePortaEntrada(ClienteRepositoryPortaSaida clienteRepositoryPortaSaida){
-        return new RemoveClienteService(clienteRepositoryPortaSaida);
+    RemoveClienteCasoDeUso removeClientePortaEntrada(ClienteRepositoryService clienteRepositoryService){
+        return new RemoveClienteCasoDeUsoImpl(clienteRepositoryService);
     }
 
     @Bean
-    ProcuraClientePortaEntrada procuraClientePortaEntrada(ClienteRepositoryPortaSaida clienteRepositoryPortaSaida){
-        return new ProcuraClienteService(clienteRepositoryPortaSaida);
+    ProcuraClienteCasoDeUso procuraClientePortaEntrada(ClienteRepositoryService clienteRepositoryService){
+        return new ProcuraClienteCasoDeUsoImpl(clienteRepositoryService);
     }
 }

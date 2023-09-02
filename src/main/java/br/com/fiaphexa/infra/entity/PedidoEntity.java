@@ -1,10 +1,9 @@
 package br.com.fiaphexa.infra.entity;
 
-import br.com.fiaphexa.dominio.dtos.pedido.PedidoDto;
+import br.com.fiaphexa.aplicacao.dtos.pedido.PedidoDto;
 import br.com.fiaphexa.dominio.enuns.StatusPedido;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import jdk.jfr.BooleanFlag;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

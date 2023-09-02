@@ -1,14 +1,14 @@
 package br.com.fiaphexa.infra.bean;
 
-import br.com.fiaphexa.dominio.portas.entrada.produtos.AtualizaProdutoPortaEntrada;
-import br.com.fiaphexa.dominio.portas.entrada.produtos.CadastraProdutoPortaEntrada;
-import br.com.fiaphexa.dominio.portas.entrada.produtos.ProcuraProdutoPorCategoriaPortaEntrada;
-import br.com.fiaphexa.dominio.portas.entrada.produtos.RemoveProdutoPortaEntrada;
-import br.com.fiaphexa.dominio.portas.saida.produto.ProdutoRepositoryPortaSaida;
-import br.com.fiaphexa.dominio.services.produto.AtualizaProdutoService;
-import br.com.fiaphexa.dominio.services.produto.CadastrarProdutoService;
-import br.com.fiaphexa.dominio.services.produto.ProcuraProdutoPorCategoriaService;
-import br.com.fiaphexa.dominio.services.produto.RemoveProdutoService;
+import br.com.fiaphexa.aplicacao.casosdeuso.abstracoes.produtos.AtualizaProdutoCasoDeUso;
+import br.com.fiaphexa.aplicacao.casosdeuso.abstracoes.produtos.CadastraProdutoCasoDeUso;
+import br.com.fiaphexa.aplicacao.casosdeuso.abstracoes.produtos.ProcuraProdutoPorCategoriaCasoDeUso;
+import br.com.fiaphexa.aplicacao.casosdeuso.abstracoes.produtos.RemoveProdutoCasoDeUso;
+import br.com.fiaphexa.aplicacao.repositorios.produto.ProdutoRepositoryService;
+import br.com.fiaphexa.aplicacao.casosdeuso.produto.CadastrarProdutoCasoDeUsoImpl;
+import br.com.fiaphexa.aplicacao.casosdeuso.produto.AtualizaProdutoCasoDeUsoImpl;
+import br.com.fiaphexa.aplicacao.casosdeuso.produto.ProcuraProdutoPorCategoriaCasoDeUsoImpl;
+import br.com.fiaphexa.aplicacao.casosdeuso.produto.RemoveProdutoCasoDeUsoImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -16,23 +16,23 @@ import org.springframework.context.annotation.Configuration;
 public class ProdutoBeanConfig {
 
     @Bean
-    CadastraProdutoPortaEntrada cadastraProdutoPortaEntrada(ProdutoRepositoryPortaSaida produtoRepositoryPort){
-        return new CadastrarProdutoService(produtoRepositoryPort);
+    CadastraProdutoCasoDeUso cadastraProdutoPortaEntrada(ProdutoRepositoryService produtoRepositoryPort){
+        return new CadastrarProdutoCasoDeUsoImpl(produtoRepositoryPort);
     }
 
     @Bean
-    AtualizaProdutoPortaEntrada atualizaProdutoPortaEntrada(ProdutoRepositoryPortaSaida produtoRepositoryPort){
-        return new AtualizaProdutoService(produtoRepositoryPort);
+    AtualizaProdutoCasoDeUso atualizaProdutoPortaEntrada(ProdutoRepositoryService produtoRepositoryPort){
+        return new AtualizaProdutoCasoDeUsoImpl(produtoRepositoryPort);
     }
 
     @Bean
-    ProcuraProdutoPorCategoriaPortaEntrada procuraProdutoPorCategoriaPortaEntrada(ProdutoRepositoryPortaSaida produtoRepositoryPort){
-        return new ProcuraProdutoPorCategoriaService(produtoRepositoryPort);
+    ProcuraProdutoPorCategoriaCasoDeUso procuraProdutoPorCategoriaPortaEntrada(ProdutoRepositoryService produtoRepositoryPort){
+        return new ProcuraProdutoPorCategoriaCasoDeUsoImpl(produtoRepositoryPort);
     }
 
     @Bean
-    RemoveProdutoPortaEntrada removeProdutoPortaEntrada(ProdutoRepositoryPortaSaida produtoRepositoryPort){
-        return new RemoveProdutoService(produtoRepositoryPort);
+    RemoveProdutoCasoDeUso removeProdutoPortaEntrada(ProdutoRepositoryService produtoRepositoryPort){
+        return new RemoveProdutoCasoDeUsoImpl(produtoRepositoryPort);
     }
 
 
