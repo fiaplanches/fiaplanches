@@ -1,6 +1,7 @@
 package br.com.fiaphexa.web.controllers.pedido;
 
-import br.com.fiaphexa.web.controllers.pedido.request.CriaPedidoRequestDto;
+import br.com.fiaphexa.aplicacao.casosdeuso.abstracoes.pedidos.AdicionaNoCarrinhoCasoDeUso;
+import br.com.fiaphexa.web.controllers.pedido.request.AdicionaCarrinhoRequestDto;
 import br.com.fiaphexa.aplicacao.dtos.PageInfoDto;
 import br.com.fiaphexa.aplicacao.dtos.pedido.PedidoDto;
 import br.com.fiaphexa.aplicacao.casosdeuso.abstracoes.pedidos.BuscaPedidosClienteCasoDeUso;
@@ -25,12 +26,15 @@ public class PedidoController {
     private final BuscaPedidosClienteCasoDeUso buscaPedidosClienteCasoDeUso;
     private final BuscaPedidosCasoDeUso buscaPedidosCasoDeUso;
     private final CriaPedidoCasoDeUso criaPedidoCasoDeUso;
+    private final AdicionaNoCarrinhoCasoDeUso adicionaNoCarrinhoCasoDeUso;
 
     public PedidoController(BuscaPedidosClienteCasoDeUso buscaPedidosClienteCasoDeUso,
-                            BuscaPedidosCasoDeUso buscaPedidosCasoDeUso, CriaPedidoCasoDeUso criaPedidoCasoDeUso){
+                            BuscaPedidosCasoDeUso buscaPedidosCasoDeUso, CriaPedidoCasoDeUso criaPedidoCasoDeUso,
+                            AdicionaNoCarrinhoCasoDeUso adicionaNoCarrinhoCasoDeUso){
         this.buscaPedidosClienteCasoDeUso = buscaPedidosClienteCasoDeUso;
         this.buscaPedidosCasoDeUso = buscaPedidosCasoDeUso;
         this.criaPedidoCasoDeUso = criaPedidoCasoDeUso;
+        this.adicionaNoCarrinhoCasoDeUso = adicionaNoCarrinhoCasoDeUso;
 
 }
 
@@ -56,8 +60,14 @@ public class PedidoController {
     }
 
     @PostMapping()
-    public ResponseEntity<PedidoDto> criaPedido(@RequestBody @Valid CriaPedidoRequestDto criaPedidoRequestDto) {
-        PedidoDto pedido = criaPedidoCasoDeUso.criaPedido(CriaPedidoRequestDto.toPedidoComIdProdutosDto(criaPedidoRequestDto));
+    public ResponseEntity<PedidoDto> pagaPedido(@RequestBody @Valid AdicionaCarrinhoRequestDto adicionaCarrinhoRequestDto) {
+        PedidoDto pedido = criaPedidoCasoDeUso.criaPedido(AdicionaCarrinhoRequestDto.toPedidoComIdProdutosDto(adicionaCarrinhoRequestDto));
+        return ResponseEntity.status(HttpStatus.CREATED).body(pedido);
+    }
+
+    @PostMapping("/adicionaCarrinho")
+    public ResponseEntity<PedidoDto> adicionaNoCarrinho(@RequestBody @Valid AdicionaCarrinhoRequestDto adicionaCarrinhoRequestDto) {
+        PedidoDto pedido = adicionaNoCarrinhoCasoDeUso.adicionaNoCarrinho(AdicionaCarrinhoRequestDto.toPedidoComIdProdutosDto(adicionaCarrinhoRequestDto));
         return ResponseEntity.status(HttpStatus.CREATED).body(pedido);
     }
 }
