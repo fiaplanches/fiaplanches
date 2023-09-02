@@ -19,7 +19,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public class CriarPedidosCasoDeUsoImpl implements CriaPedidoCasoDeUso {
+public class CriarPedidoCasoDeUsoImpl implements CriaPedidoCasoDeUso {
 
     private final PedidoRepositoryService pedidoRepositoryService;
 
@@ -29,7 +29,7 @@ public class CriarPedidosCasoDeUsoImpl implements CriaPedidoCasoDeUso {
 
     private final PedidoPagamentoRepositoryService pedidoPagamentoService;
 
-    public CriarPedidosCasoDeUsoImpl(PedidoRepositoryService pedidoRepositoryService, ClienteRepositoryService clienteRepositoryService, ProdutoRepositoryService produtoRepositoryService, PedidoPagamentoRepositoryService pedidoPagamentoService) {
+    public CriarPedidoCasoDeUsoImpl(PedidoRepositoryService pedidoRepositoryService, ClienteRepositoryService clienteRepositoryService, ProdutoRepositoryService produtoRepositoryService, PedidoPagamentoRepositoryService pedidoPagamentoService) {
         this.pedidoRepositoryService = pedidoRepositoryService;
         this.clienteRepositoryService = clienteRepositoryService;
         this.produtoRepositoryService = produtoRepositoryService;

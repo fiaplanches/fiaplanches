@@ -1,15 +1,17 @@
 package br.com.fiaphexa.infra.bean;
 
+import br.com.fiaphexa.aplicacao.casosdeuso.abstracoes.pedidos.AdicionaNoCarrinhoCasoDeUso;
 import br.com.fiaphexa.aplicacao.casosdeuso.abstracoes.pedidos.BuscaPedidosClienteCasoDeUso;
 import br.com.fiaphexa.aplicacao.casosdeuso.abstracoes.pedidos.BuscaPedidosCasoDeUso;
 import br.com.fiaphexa.aplicacao.casosdeuso.abstracoes.pedidos.CriaPedidoCasoDeUso;
+import br.com.fiaphexa.aplicacao.casosdeuso.pedido.AdicionaNoCarrinhoCasoDeUsoImpl;
 import br.com.fiaphexa.aplicacao.repositorios.cliente.ClienteRepositoryService;
 import br.com.fiaphexa.aplicacao.repositorios.pedido.PedidoPagamentoRepositoryService;
 import br.com.fiaphexa.aplicacao.repositorios.pedido.PedidoRepositoryService;
 import br.com.fiaphexa.aplicacao.repositorios.produto.ProdutoRepositoryService;
 import br.com.fiaphexa.aplicacao.casosdeuso.pedido.BuscaPedidosClienteCasoDeUsoImpl;
 import br.com.fiaphexa.aplicacao.casosdeuso.pedido.BuscaPedidosCasoDeUsoImpl;
-import br.com.fiaphexa.aplicacao.casosdeuso.pedido.CriarPedidosCasoDeUsoImpl;
+import br.com.fiaphexa.aplicacao.casosdeuso.pedido.CriarPedidoCasoDeUsoImpl;
 import br.com.fiaphexa.infra.persistence.pedido.PedidoPagamentoPersistenceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -34,9 +36,19 @@ public class PedidoBeanConfig {
             ProdutoRepositoryService produtoRepositoryService,
             PedidoPagamentoRepositoryService pedidoPagamentoService
     ){
-        return new CriarPedidosCasoDeUsoImpl(
+        return new CriarPedidoCasoDeUsoImpl(
                 pedidoRepositoryService, clienteRepositoryService, produtoRepositoryService,
                 pedidoPagamentoService);
+    }
+
+    @Bean
+    public AdicionaNoCarrinhoCasoDeUso adicionaNoCarrinhoCasoDeUso(
+            PedidoRepositoryService pedidoRepositoryService,
+            ClienteRepositoryService clienteRepositoryService,
+            ProdutoRepositoryService produtoRepositoryService
+    ){
+        return new AdicionaNoCarrinhoCasoDeUsoImpl(
+                pedidoRepositoryService, clienteRepositoryService, produtoRepositoryService);
     }
 
     @Bean

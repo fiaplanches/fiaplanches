@@ -5,5 +5,7 @@ public enum StatusPedido {
     EM_PREPARO,
     PRONTO,
     FINALIZADO,
-    PAGAMENTO_PENDENTE
+    PAGAMENTO_PENDENTE,
+    NO_CARRINHO,
+    PRONTO_PRA_PAGAMENTO
 }

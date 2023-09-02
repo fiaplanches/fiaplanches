@@ -7,7 +7,7 @@ import org.hibernate.validator.constraints.br.CPF;
 
 import java.util.List;
 
-public record CriaPedidoRequestDto(
+public record AdicionaCarrinhoRequestDto(
         @NotBlank(message = "CPF nao pode ser vazio")
         @CPF(message = "CPF informado e invalido")
         String cpf,
@@ -15,10 +15,10 @@ public record CriaPedidoRequestDto(
         List<Long> produtos
 ) {
 
-    public static PedidoComIdProdutosDto toPedidoComIdProdutosDto(CriaPedidoRequestDto criaPedidoRequestDto) {
+    public static PedidoComIdProdutosDto toPedidoComIdProdutosDto(AdicionaCarrinhoRequestDto adicionaCarrinhoRequestDto) {
         return new PedidoComIdProdutosDto(
-                criaPedidoRequestDto.cpf(),
-                criaPedidoRequestDto.produtos()
+                adicionaCarrinhoRequestDto.cpf(),
+                adicionaCarrinhoRequestDto.produtos()
         );
     }
 }
