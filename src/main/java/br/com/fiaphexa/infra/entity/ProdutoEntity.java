@@ -1,6 +1,6 @@
 package br.com.fiaphexa.infra.entity;
 
-import br.com.fiaphexa.dominio.dtos.produto.ProdutoDto;
+import br.com.fiaphexa.aplicacao.dtos.produto.ProdutoDto;
 import br.com.fiaphexa.dominio.enuns.Categoria;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

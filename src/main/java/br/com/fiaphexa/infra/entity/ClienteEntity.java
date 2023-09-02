@@ -1,6 +1,6 @@
 package br.com.fiaphexa.infra.entity;
 
-import br.com.fiaphexa.dominio.dtos.cliente.ClienteDto;
+import br.com.fiaphexa.aplicacao.dtos.cliente.ClienteDto;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
