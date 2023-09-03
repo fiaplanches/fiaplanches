@@ -3,6 +3,7 @@ package br.com.fiaphexa.infra.persistence.pedido;
 import br.com.fiaphexa.aplicacao.dtos.PageInfoDto;
 import br.com.fiaphexa.aplicacao.dtos.pedido.PedidoDto;
 import br.com.fiaphexa.aplicacao.repositorios.pedido.PedidoRepositoryService;
+import br.com.fiaphexa.infra.entity.ClienteEntity;
 import br.com.fiaphexa.infra.entity.PedidoEntity;
 import br.com.fiaphexa.infra.repository.PostGresPedidoRepository;
 import org.springframework.data.domain.PageRequest;
@@ -10,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class PedidoPersistenceImpl implements PedidoRepositoryService {
@@ -24,6 +26,11 @@ public class PedidoPersistenceImpl implements PedidoRepositoryService {
     public PedidoDto salvaPedido(PedidoDto pedidoDto) {
         var pedidoEntity = postGresPedidoRepository.save(new PedidoEntity(pedidoDto));
         return pedidoEntity.toPedidoDto();
+    }
+
+    @Override
+    public Optional<PedidoDto> buscaPedidoPorId(Long idPedido) {
+        return postGresPedidoRepository.findByIdPedido(idPedido).map(PedidoEntity::toPedidoDto);
     }
 
     @Override
