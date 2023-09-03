@@ -1,12 +1,10 @@
 package br.com.fiaphexa.web.controllers.pedido;
 
-import br.com.fiaphexa.aplicacao.casosdeuso.abstracoes.pedidos.AdicionaNoCarrinhoCasoDeUso;
+import br.com.fiaphexa.aplicacao.casosdeuso.abstracoes.pedidos.*;
 import br.com.fiaphexa.web.controllers.pedido.request.AdicionaCarrinhoRequestDto;
 import br.com.fiaphexa.aplicacao.dtos.PageInfoDto;
 import br.com.fiaphexa.aplicacao.dtos.pedido.PedidoDto;
-import br.com.fiaphexa.aplicacao.casosdeuso.abstracoes.pedidos.BuscaPedidosClienteCasoDeUso;
-import br.com.fiaphexa.aplicacao.casosdeuso.abstracoes.pedidos.BuscaPedidosCasoDeUso;
-import br.com.fiaphexa.aplicacao.casosdeuso.abstracoes.pedidos.CriaPedidoCasoDeUso;
+import br.com.fiaphexa.web.controllers.pedido.request.ConsultaStatusPagamentoRequestDto;
 import jakarta.validation.Valid;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
@@ -28,15 +26,18 @@ public class PedidoController {
     private final CriaPedidoCasoDeUso criaPedidoCasoDeUso;
     private final AdicionaNoCarrinhoCasoDeUso adicionaNoCarrinhoCasoDeUso;
 
+    private final ConsultaStatusPagamentoCasoDeUso consultaStatusPagamentoCasoDeUso;
+
     public PedidoController(BuscaPedidosClienteCasoDeUso buscaPedidosClienteCasoDeUso,
                             BuscaPedidosCasoDeUso buscaPedidosCasoDeUso, CriaPedidoCasoDeUso criaPedidoCasoDeUso,
-                            AdicionaNoCarrinhoCasoDeUso adicionaNoCarrinhoCasoDeUso){
+                            AdicionaNoCarrinhoCasoDeUso adicionaNoCarrinhoCasoDeUso,
+                            ConsultaStatusPagamentoCasoDeUso consultaStatusPagamentoCasoDeUso){
         this.buscaPedidosClienteCasoDeUso = buscaPedidosClienteCasoDeUso;
         this.buscaPedidosCasoDeUso = buscaPedidosCasoDeUso;
         this.criaPedidoCasoDeUso = criaPedidoCasoDeUso;
         this.adicionaNoCarrinhoCasoDeUso = adicionaNoCarrinhoCasoDeUso;
-
-}
+        this.consultaStatusPagamentoCasoDeUso = consultaStatusPagamentoCasoDeUso;
+    }
 
     @GetMapping()
     public ResponseEntity<Page<PedidoDto>> buscaPedidos(@PageableDefault Pageable pageable) {
@@ -65,9 +66,15 @@ public class PedidoController {
         return ResponseEntity.status(HttpStatus.CREATED).body(pedido);
     }
 
-    @PostMapping("/adicionaCarrinho")
-    public ResponseEntity<PedidoDto> adicionaNoCarrinho(@RequestBody @Valid AdicionaCarrinhoRequestDto adicionaCarrinhoRequestDto) {
+    @PostMapping("/adiciona-carrinho")
+    public ResponseEntity<Long> adicionaNoCarrinho(@RequestBody @Valid AdicionaCarrinhoRequestDto adicionaCarrinhoRequestDto) {
         PedidoDto pedido = adicionaNoCarrinhoCasoDeUso.adicionaNoCarrinho(AdicionaCarrinhoRequestDto.toPedidoComIdProdutosDto(adicionaCarrinhoRequestDto));
-        return ResponseEntity.status(HttpStatus.CREATED).body(pedido);
+        return ResponseEntity.status(HttpStatus.CREATED).body(pedido.id());
+    }
+
+    @GetMapping("/consulta-status-pagamento")
+    public ResponseEntity<String> consultaStatusPagamento(@RequestBody @Valid ConsultaStatusPagamentoRequestDto consultaStatusPagamentoRequestDto) {
+        var statusPagamento = consultaStatusPagamentoCasoDeUso.consultaStatusPagamento(consultaStatusPagamentoRequestDto);
+        return ResponseEntity.status(HttpStatus.OK).body(statusPagamento);
     }
 }

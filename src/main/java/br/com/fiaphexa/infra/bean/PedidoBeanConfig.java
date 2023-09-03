@@ -1,17 +1,11 @@
 package br.com.fiaphexa.infra.bean;
 
-import br.com.fiaphexa.aplicacao.casosdeuso.abstracoes.pedidos.AdicionaNoCarrinhoCasoDeUso;
-import br.com.fiaphexa.aplicacao.casosdeuso.abstracoes.pedidos.BuscaPedidosClienteCasoDeUso;
-import br.com.fiaphexa.aplicacao.casosdeuso.abstracoes.pedidos.BuscaPedidosCasoDeUso;
-import br.com.fiaphexa.aplicacao.casosdeuso.abstracoes.pedidos.CriaPedidoCasoDeUso;
-import br.com.fiaphexa.aplicacao.casosdeuso.pedido.AdicionaNoCarrinhoCasoDeUsoImpl;
+import br.com.fiaphexa.aplicacao.casosdeuso.abstracoes.pedidos.*;
+import br.com.fiaphexa.aplicacao.casosdeuso.pedido.*;
 import br.com.fiaphexa.aplicacao.repositorios.cliente.ClienteRepositoryService;
 import br.com.fiaphexa.aplicacao.repositorios.pedido.PedidoPagamentoRepositoryService;
 import br.com.fiaphexa.aplicacao.repositorios.pedido.PedidoRepositoryService;
 import br.com.fiaphexa.aplicacao.repositorios.produto.ProdutoRepositoryService;
-import br.com.fiaphexa.aplicacao.casosdeuso.pedido.BuscaPedidosClienteCasoDeUsoImpl;
-import br.com.fiaphexa.aplicacao.casosdeuso.pedido.BuscaPedidosCasoDeUsoImpl;
-import br.com.fiaphexa.aplicacao.casosdeuso.pedido.CriarPedidoCasoDeUsoImpl;
 import br.com.fiaphexa.infra.persistence.pedido.PedidoPagamentoPersistenceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -49,6 +43,15 @@ public class PedidoBeanConfig {
     ){
         return new AdicionaNoCarrinhoCasoDeUsoImpl(
                 pedidoRepositoryService, clienteRepositoryService, produtoRepositoryService);
+    }
+
+    @Bean
+    public ConsultaStatusPagamentoCasoDeUso consultaStatusPagamentoCasoDeUso(
+            PedidoRepositoryService pedidoRepositoryService,
+            ClienteRepositoryService clienteRepositoryService
+    ){
+        return new ConsultaStatusPagamentoCasoDeUsoImpl(
+                pedidoRepositoryService, clienteRepositoryService);
     }
 
     @Bean

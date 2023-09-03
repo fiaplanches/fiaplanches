@@ -47,4 +47,8 @@ public record PedidoDto(
                 this.isApproved
         );
     }
+
+    public String statusToString(){
+        return isApproved ? "Aprovado" : "Não Aprovado";
+    }
 }
