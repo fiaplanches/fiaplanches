@@ -29,6 +29,12 @@ public class PedidoPersistenceImpl implements PedidoRepositoryService {
     }
 
     @Override
+    public Boolean atualizaStatusPagamento(Long idPedido, Boolean isApproved) {
+        var resultadoUpdate = postGresPedidoRepository.updatePaymentStatusPedido(idPedido, isApproved);
+        return resultadoUpdate == 1;
+    }
+
+    @Override
     public Optional<PedidoDto> buscaPedidoPorId(Long idPedido) {
         return postGresPedidoRepository.findByIdPedido(idPedido).map(PedidoEntity::toPedidoDto);
     }

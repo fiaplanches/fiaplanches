@@ -4,7 +4,8 @@ import br.com.fiaphexa.aplicacao.casosdeuso.abstracoes.pedidos.*;
 import br.com.fiaphexa.web.controllers.pedido.request.AdicionaCarrinhoRequestDto;
 import br.com.fiaphexa.aplicacao.dtos.PageInfoDto;
 import br.com.fiaphexa.aplicacao.dtos.pedido.PedidoDto;
-import br.com.fiaphexa.web.controllers.pedido.request.ConsultaStatusPagamentoRequestDto;
+import br.com.fiaphexa.web.controllers.pedido.request.AtualizaStatusPagamentoRequestDto;
+import br.com.fiaphexa.web.controllers.pedido.request.PagamentoRequestDto;
 import jakarta.validation.Valid;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
@@ -23,20 +24,22 @@ public class PedidoController {
 
     private final BuscaPedidosClienteCasoDeUso buscaPedidosClienteCasoDeUso;
     private final BuscaPedidosCasoDeUso buscaPedidosCasoDeUso;
-    private final CriaPedidoCasoDeUso criaPedidoCasoDeUso;
+    private final PagaPedidoCasoDeUso pagaPedidoCasoDeUso;
     private final AdicionaNoCarrinhoCasoDeUso adicionaNoCarrinhoCasoDeUso;
-
     private final ConsultaStatusPagamentoCasoDeUso consultaStatusPagamentoCasoDeUso;
+    private final AtualizaStatusPagamentoCasoDeUso atualizaStatusPagamentoCasoDeUso;
 
     public PedidoController(BuscaPedidosClienteCasoDeUso buscaPedidosClienteCasoDeUso,
-                            BuscaPedidosCasoDeUso buscaPedidosCasoDeUso, CriaPedidoCasoDeUso criaPedidoCasoDeUso,
+                            BuscaPedidosCasoDeUso buscaPedidosCasoDeUso, PagaPedidoCasoDeUso pagaPedidoCasoDeUso,
                             AdicionaNoCarrinhoCasoDeUso adicionaNoCarrinhoCasoDeUso,
-                            ConsultaStatusPagamentoCasoDeUso consultaStatusPagamentoCasoDeUso){
+                            ConsultaStatusPagamentoCasoDeUso consultaStatusPagamentoCasoDeUso,
+                            AtualizaStatusPagamentoCasoDeUso atualizaStatusPagamentoCasoDeUso){
         this.buscaPedidosClienteCasoDeUso = buscaPedidosClienteCasoDeUso;
         this.buscaPedidosCasoDeUso = buscaPedidosCasoDeUso;
-        this.criaPedidoCasoDeUso = criaPedidoCasoDeUso;
+        this.pagaPedidoCasoDeUso = pagaPedidoCasoDeUso;
         this.adicionaNoCarrinhoCasoDeUso = adicionaNoCarrinhoCasoDeUso;
         this.consultaStatusPagamentoCasoDeUso = consultaStatusPagamentoCasoDeUso;
+        this.atualizaStatusPagamentoCasoDeUso = atualizaStatusPagamentoCasoDeUso;
     }
 
     @GetMapping()
@@ -60,10 +63,10 @@ public class PedidoController {
         );
     }
 
-    @PostMapping()
-    public ResponseEntity<PedidoDto> pagaPedido(@RequestBody @Valid AdicionaCarrinhoRequestDto adicionaCarrinhoRequestDto) {
-        PedidoDto pedido = criaPedidoCasoDeUso.criaPedido(AdicionaCarrinhoRequestDto.toPedidoComIdProdutosDto(adicionaCarrinhoRequestDto));
-        return ResponseEntity.status(HttpStatus.CREATED).body(pedido);
+    @PostMapping("/paga-pedido")
+    public ResponseEntity<HttpStatus> pagaPedido(@RequestBody @Valid PagamentoRequestDto pagamentoRequestDto) {
+        pagaPedidoCasoDeUso.pagaPedido(pagamentoRequestDto);
+        return ResponseEntity.accepted().build();
     }
 
     @PostMapping("/adiciona-carrinho")
@@ -73,8 +76,14 @@ public class PedidoController {
     }
 
     @GetMapping("/consulta-status-pagamento")
-    public ResponseEntity<String> consultaStatusPagamento(@RequestBody @Valid ConsultaStatusPagamentoRequestDto consultaStatusPagamentoRequestDto) {
-        var statusPagamento = consultaStatusPagamentoCasoDeUso.consultaStatusPagamento(consultaStatusPagamentoRequestDto);
+    public ResponseEntity<String> consultaStatusPagamento(@RequestBody @Valid PagamentoRequestDto pagamentoRequestDto) {
+        var statusPagamento = consultaStatusPagamentoCasoDeUso.consultaStatusPagamento(pagamentoRequestDto);
+        return ResponseEntity.status(HttpStatus.OK).body(statusPagamento);
+    }
+
+    @PostMapping("/atualiza-status-pagamento")
+    public ResponseEntity<Boolean> atualizaPagamento(@RequestBody @Valid AtualizaStatusPagamentoRequestDto requestDto) {
+        var statusPagamento = atualizaStatusPagamentoCasoDeUso.atualizaStatusPagamento(requestDto);
         return ResponseEntity.status(HttpStatus.OK).body(statusPagamento);
     }
 }

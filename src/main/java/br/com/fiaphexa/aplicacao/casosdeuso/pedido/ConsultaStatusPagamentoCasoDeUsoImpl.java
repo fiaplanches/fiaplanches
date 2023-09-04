@@ -3,9 +3,7 @@ package br.com.fiaphexa.aplicacao.casosdeuso.pedido;
 import br.com.fiaphexa.aplicacao.casosdeuso.abstracoes.pedidos.ConsultaStatusPagamentoCasoDeUso;
 import br.com.fiaphexa.aplicacao.repositorios.cliente.ClienteRepositoryService;
 import br.com.fiaphexa.aplicacao.repositorios.pedido.PedidoRepositoryService;
-import br.com.fiaphexa.dominio.enuns.StatusPedido;
-import br.com.fiaphexa.web.controllers.pedido.request.AdicionaCarrinhoRequestDto;
-import br.com.fiaphexa.web.controllers.pedido.request.ConsultaStatusPagamentoRequestDto;
+import br.com.fiaphexa.web.controllers.pedido.request.PagamentoRequestDto;
 import jakarta.persistence.EntityNotFoundException;
 
 public class ConsultaStatusPagamentoCasoDeUsoImpl implements ConsultaStatusPagamentoCasoDeUso {
@@ -21,7 +19,7 @@ public class ConsultaStatusPagamentoCasoDeUsoImpl implements ConsultaStatusPagam
     }
 
     @Override
-    public String consultaStatusPagamento(ConsultaStatusPagamentoRequestDto request) {
+    public String consultaStatusPagamento(PagamentoRequestDto request) {
 
         clienteRepositoryService.procuraClientePorCpf(request.cpf())
                 .orElseThrow(() -> new EntityNotFoundException("Cliente não encontrado"));
