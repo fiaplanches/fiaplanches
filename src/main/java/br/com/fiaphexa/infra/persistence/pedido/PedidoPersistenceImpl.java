@@ -3,9 +3,9 @@ package br.com.fiaphexa.infra.persistence.pedido;
 import br.com.fiaphexa.aplicacao.dtos.PageInfoDto;
 import br.com.fiaphexa.aplicacao.dtos.pedido.PedidoDto;
 import br.com.fiaphexa.aplicacao.repositorios.pedido.PedidoRepositoryService;
-import br.com.fiaphexa.infra.entity.ClienteEntity;
 import br.com.fiaphexa.infra.entity.PedidoEntity;
 import br.com.fiaphexa.infra.repository.PostGresPedidoRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
@@ -30,8 +30,14 @@ public class PedidoPersistenceImpl implements PedidoRepositoryService {
 
     @Override
     public Boolean atualizaStatusPagamento(Long idPedido, Boolean isApproved) {
-        var resultadoUpdate = postGresPedidoRepository.updatePaymentStatusPedido(idPedido, isApproved);
-        return resultadoUpdate == 1;
+
+        var pedidoEntity = postGresPedidoRepository.findByIdPedido(idPedido).orElseThrow(
+                () -> new EntityNotFoundException("Pedido nao encontrado")
+        );
+        pedidoEntity.setIsApproved(isApproved);
+        var pedidoEntityAtualizado = postGresPedidoRepository.save(pedidoEntity);
+
+        return pedidoEntityAtualizado.getId() != null;
     }
 
     @Override

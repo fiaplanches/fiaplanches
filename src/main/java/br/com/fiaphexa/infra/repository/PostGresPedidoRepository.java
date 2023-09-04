@@ -16,8 +16,4 @@ public interface PostGresPedidoRepository extends JpaRepository<PedidoEntity, Lo
 
     @Query("select p from PedidoEntity p where p.id = :idPedido")
     Optional<PedidoEntity> findByIdPedido(Long idPedido);
-
-    @Modifying
-    @Query("update PedidoEntity p set p.isApproved = :isApproved where p.id =:idPedido")
-    int updatePaymentStatusPedido(Long idPedido, Boolean isApproved);
 }
