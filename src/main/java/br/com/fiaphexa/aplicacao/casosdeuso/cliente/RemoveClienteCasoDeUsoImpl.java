@@ -19,7 +19,7 @@ public class RemoveClienteCasoDeUsoImpl implements RemoveClienteCasoDeUso {
 
     @Override
     public void remove(String cpf) {
-        var clienteDto = clienteRepositoryService.procuraClientePorCpf(cpf)
+        clienteRepositoryService.procuraClientePorCpf(cpf)
                 .orElseThrow(() -> new EntityNotFoundException("Cliente não encontrado"));
         var pedidosDtosList = pedidoRepositoryService.buscaTodosPedidosPorCpf(cpf);
 
