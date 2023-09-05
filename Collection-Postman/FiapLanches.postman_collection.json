@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "8fc1958d-337e-430b-8399-10fb514b493e",
-		"name": "FiapLanches",
+		"_postman_id": "cc53716a-7519-4acd-8c8f-4819e5614ada",
+		"name": "FiapLanches Copy",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "17470774"
 	},
@@ -126,7 +126,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"cpf\": 40859526844,\r\n    \"nome\":\"Davi Alexandrias\"\r\n}",
+							"raw": "{\r\n    \"cpf\": 42637077883,\r\n    \"nome\":\"Raull\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -175,7 +175,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"cpf\": 40859526844,\r\n    \"nome\":\"Raul Magalhaes Vitoriano\"\r\n}",
+							"raw": "{\r\n    \"cpf\": 42637077883,\r\n    \"nome\":\"Davi\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -203,7 +203,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/cliente/40859526844",
+							"raw": "http://localhost:8080/cliente/42637077883",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -211,7 +211,7 @@
 							"port": "8080",
 							"path": [
 								"cliente",
-								"40859526844"
+								"42637077883"
 							]
 						}
 					},
@@ -223,13 +223,131 @@
 			"name": "Pedido",
 			"item": [
 				{
-					"name": "Novo Pedido",
+					"name": "Consulta",
+					"item": [
+						{
+							"name": "Consulta Pedidos",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/pedidos?page=0&size=100",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"pedidos"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "0"
+										},
+										{
+											"key": "size",
+											"value": "100"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Consulta Pedido Cliente",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/pedidos/42637077883",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"pedidos",
+										"42637077883"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Consulta Status Pagamento Pedido",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"cpf\": \"40859526844\",\r\n    \"idPedido\": 1   \r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/pedidos/consulta-status-pagamento",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"pedidos",
+										"consulta-status-pagamento"
+									],
+									"query": [
+										{
+											"key": "cpf",
+											"value": "40859526844",
+											"disabled": true
+										},
+										{
+											"key": "idPedido",
+											"value": "1",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Consulta Pedidos Ordenados",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/pedidos/ordenados",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"pedidos",
+										"ordenados"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Paga Pedido",
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"cpf\": \"44459626845\",\r\n    \"produtos\": [4, 2, 6, 12, 15]\r\n}",
+							"raw": "{\r\n    \"cpf\": \"40859526844\",\r\n    \"idPedido\": 1   \r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -237,55 +355,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/pedidos",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"pedidos"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Busca Pedidos",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8080/pedidos?page=0&size=100",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"pedidos"
-							],
-							"query": [
-								{
-									"key": "page",
-									"value": "0"
-								},
-								{
-									"key": "size",
-									"value": "100"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Buscar Pedido Cliente",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8080/pedidos/40859526844",
+							"raw": "http://localhost:8080/pedidos/paga-pedido",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -293,7 +363,57 @@
 							"port": "8080",
 							"path": [
 								"pedidos",
-								"40859526844"
+								"paga-pedido"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Adiciona Pedido Carinho",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"cpf\": \"40859526844\",\r\n    \"produtos\": [4, 2, 6, 12, 15]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/pedidos/adiciona-carrinho",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"pedidos",
+								"adiciona-carrinho"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Atualiza Status Pedido",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/pedidos/atualizar/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"pedidos",
+								"atualizar",
+								"1"
 							]
 						}
 					},
