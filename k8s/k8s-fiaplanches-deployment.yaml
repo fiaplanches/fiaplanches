@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: fiap-lanches-api
+  name: fiap-lanches-api
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: fiap-lanches-api
+  template:
+    metadata:
+      labels:
+        app: fiap-lanches-api
+      name: fiap-lanches-api
+    spec:
+      containers:
+        - image: dalexandrias/fiaplanches-api:2.1
+          imagePullPolicy: IfNotPresent
+          name: fiap-lanches-api
+          ports:
+            - containerPort: 8080
+          envFrom:
+            - configMapRef:
+                name: fiaplanches-config
+          env:
+            - name: SPRING_DATASOURCE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: password
+                  name: fiaplanches-secrets
+                  optional: false
+      restartPolicy: Always

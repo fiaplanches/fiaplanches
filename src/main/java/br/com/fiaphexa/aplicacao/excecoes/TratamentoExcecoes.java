@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.util.Date;
 
-@ControllerAdvice(basePackages = "br.com.fiaphexa.aplicacao.controllers")
+@ControllerAdvice(basePackages = "br.com.fiaphexa.web.controllers")
 public class TratamentoExcecoes {
 
     @ExceptionHandler(EntityNotFoundException.class)

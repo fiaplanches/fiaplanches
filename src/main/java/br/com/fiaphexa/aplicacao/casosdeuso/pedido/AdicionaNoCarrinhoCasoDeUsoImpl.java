@@ -1,12 +1,10 @@
 package br.com.fiaphexa.aplicacao.casosdeuso.pedido;
 
 import br.com.fiaphexa.aplicacao.casosdeuso.abstracoes.pedidos.AdicionaNoCarrinhoCasoDeUso;
-import br.com.fiaphexa.aplicacao.dtos.cliente.ClienteDto;
 import br.com.fiaphexa.aplicacao.dtos.pedido.PedidoComIdProdutosDto;
 import br.com.fiaphexa.aplicacao.dtos.pedido.PedidoDto;
 import br.com.fiaphexa.aplicacao.dtos.produto.ProdutoDto;
 import br.com.fiaphexa.aplicacao.repositorios.cliente.ClienteRepositoryService;
-import br.com.fiaphexa.aplicacao.repositorios.pedido.PedidoPagamentoRepositoryService;
 import br.com.fiaphexa.aplicacao.repositorios.pedido.PedidoRepositoryService;
 import br.com.fiaphexa.aplicacao.repositorios.produto.ProdutoRepositoryService;
 import br.com.fiaphexa.dominio.enuns.StatusPedido;

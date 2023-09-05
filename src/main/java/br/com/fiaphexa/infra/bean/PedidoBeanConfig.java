@@ -3,10 +3,9 @@ package br.com.fiaphexa.infra.bean;
 import br.com.fiaphexa.aplicacao.casosdeuso.abstracoes.pedidos.*;
 import br.com.fiaphexa.aplicacao.casosdeuso.pedido.*;
 import br.com.fiaphexa.aplicacao.repositorios.cliente.ClienteRepositoryService;
-import br.com.fiaphexa.aplicacao.repositorios.pedido.PedidoPagamentoRepositoryService;
 import br.com.fiaphexa.aplicacao.repositorios.pedido.PedidoRepositoryService;
 import br.com.fiaphexa.aplicacao.repositorios.produto.ProdutoRepositoryService;
-import br.com.fiaphexa.infra.persistence.pedido.PedidoPagamentoPersistenceImpl;
+import br.com.fiaphexa.infra.gateways.WebhookGateway;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -14,25 +13,23 @@ import org.springframework.context.annotation.Configuration;
 public class PedidoBeanConfig {
 
     @Bean
-    public BuscaPedidosCasoDeUso buscaPedidosPortaEntrada(PedidoRepositoryService pedidoRepositoryService){
+    public BuscaPedidosCasoDeUso buscaPedidosCasoDeUso(PedidoRepositoryService pedidoRepositoryService){
         return new BuscaPedidosCasoDeUsoImpl(pedidoRepositoryService);
     }
 
     @Bean
-    public BuscaPedidosClienteCasoDeUso buscaPedidosClientePortaEntrada(PedidoRepositoryService pedidoRepositoryService){
+    public BuscaPedidosClienteCasoDeUso buscaPedidosClienteCasoDeUso(PedidoRepositoryService pedidoRepositoryService){
         return new BuscaPedidosClienteCasoDeUsoImpl(pedidoRepositoryService);
     }
 
     @Bean
-    public CriaPedidoCasoDeUso criaPedidoPortaEntrada(
+    public PagaPedidoCasoDeUso pagaPedidoCasoDeUso(
             PedidoRepositoryService pedidoRepositoryService,
             ClienteRepositoryService clienteRepositoryService,
-            ProdutoRepositoryService produtoRepositoryService,
-            PedidoPagamentoRepositoryService pedidoPagamentoService
+            WebhookGateway webhookGateway
     ){
-        return new CriarPedidoCasoDeUsoImpl(
-                pedidoRepositoryService, clienteRepositoryService, produtoRepositoryService,
-                pedidoPagamentoService);
+        return new PagaPedidoCasoDeUsoImpl(
+                pedidoRepositoryService, clienteRepositoryService, webhookGateway);
     }
 
     @Bean
@@ -55,7 +52,20 @@ public class PedidoBeanConfig {
     }
 
     @Bean
-    public PedidoPagamentoRepositoryService pedidoRepositoryPortaSaida(){
-        return new PedidoPagamentoPersistenceImpl();
+    public AtualizaStatusPagamentoCasoDeUso atualizaStatusPagamentoCasoDeUso(
+            PedidoRepositoryService pedidoRepositoryService
+    ){
+        return new AtualizaStatusPagamentoCasoDeUsoImpl(
+                pedidoRepositoryService);
+    }
+
+    @Bean
+    public AtualizaPedidoCasoDeUso atualizaPedidoCasoDeUso(PedidoRepositoryService pedidoRepositoryService){
+        return new AtualizaPedidoCasoDeUsoImpl(pedidoRepositoryService);
+    }
+
+    @Bean
+    public BuscaPedidosOrdenadosCasoDeUso buscaPedidoOrdenadoCasoDeUso(PedidoRepositoryService pedidoRepositoryService){
+        return new BuscaPedidosOrdenadosCasoDeUsoImpl(pedidoRepositoryService);
     }
 }
