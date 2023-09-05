@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface PostGresPedidoRepository extends JpaRepository<PedidoEntity, Long> {
@@ -16,4 +17,6 @@ public interface PostGresPedidoRepository extends JpaRepository<PedidoEntity, Lo
 
     @Query("select p from PedidoEntity p where p.id = :idPedido")
     Optional<PedidoEntity> findByIdPedido(Long idPedido);
+    @Query("select p from PedidoEntity p where p.cliente.cpf = :cpf")
+    List<PedidoEntity> findallByCpf(String cpf);
 }

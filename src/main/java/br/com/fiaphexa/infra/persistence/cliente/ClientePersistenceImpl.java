@@ -34,9 +34,7 @@ public class ClientePersistenceImpl implements ClienteRepositoryService {
 
     @Override
     public void removeCliente(String cpf) {
-        var clienteEntity = postGresClienteRepository.findByCpf(cpf)
-                .orElseThrow(() -> new EntityNotFoundException(CLIENTE_NAO_ENCONTRADO));
-        postGresClienteRepository.deleteById(clienteEntity.getId());
+        postGresClienteRepository.deleteByCpf(cpf);
     }
 
     public ClienteDto atualizaCliente(ClienteDto clienteDto) {

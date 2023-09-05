@@ -7,4 +7,6 @@ import java.util.Optional;
 public interface PostGresClienteRepository extends JpaRepository<ClienteEntity, Long> {
 
     Optional<ClienteEntity> findByCpf(String cpf);
+
+    void deleteByCpf(String cpf);
 }

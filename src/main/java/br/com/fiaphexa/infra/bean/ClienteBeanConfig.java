@@ -9,6 +9,7 @@ import br.com.fiaphexa.aplicacao.casosdeuso.cliente.AtualizaClienteCasoDeUsoImpl
 import br.com.fiaphexa.aplicacao.casosdeuso.cliente.CadastraClienteCasoDeUsoImpl;
 import br.com.fiaphexa.aplicacao.casosdeuso.cliente.ProcuraClienteCasoDeUsoImpl;
 import br.com.fiaphexa.aplicacao.casosdeuso.cliente.RemoveClienteCasoDeUsoImpl;
+import br.com.fiaphexa.aplicacao.repositorios.pedido.PedidoRepositoryService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -26,8 +27,9 @@ public class ClienteBeanConfig {
     }
 
     @Bean
-    RemoveClienteCasoDeUso removeClientePortaEntrada(ClienteRepositoryService clienteRepositoryService){
-        return new RemoveClienteCasoDeUsoImpl(clienteRepositoryService);
+    RemoveClienteCasoDeUso removeClientePortaEntrada(ClienteRepositoryService clienteRepositoryService,
+                                                     PedidoRepositoryService pedidoRepositoryService){
+        return new RemoveClienteCasoDeUsoImpl(clienteRepositoryService, pedidoRepositoryService);
     }
 
     @Bean

@@ -1,6 +1,7 @@
 package br.com.fiaphexa.web.controllers.pedido;
 
 import br.com.fiaphexa.aplicacao.casosdeuso.abstracoes.pedidos.*;
+import br.com.fiaphexa.dominio.enuns.StatusPedido;
 import br.com.fiaphexa.web.controllers.pedido.request.AdicionaCarrinhoRequestDto;
 import br.com.fiaphexa.aplicacao.dtos.PageInfoDto;
 import br.com.fiaphexa.aplicacao.dtos.pedido.PedidoDto;
@@ -16,6 +17,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -28,18 +30,24 @@ public class PedidoController {
     private final AdicionaNoCarrinhoCasoDeUso adicionaNoCarrinhoCasoDeUso;
     private final ConsultaStatusPagamentoCasoDeUso consultaStatusPagamentoCasoDeUso;
     private final AtualizaStatusPagamentoCasoDeUso atualizaStatusPagamentoCasoDeUso;
+    private final AtualizaPedidoCasoDeUso atualizaPedidoCasoDeUso;
+    private final BuscaPedidosOrdenadosCasoDeUso buscaPedidosOrdenadosCasoDeUso;
 
     public PedidoController(BuscaPedidosClienteCasoDeUso buscaPedidosClienteCasoDeUso,
                             BuscaPedidosCasoDeUso buscaPedidosCasoDeUso, PagaPedidoCasoDeUso pagaPedidoCasoDeUso,
                             AdicionaNoCarrinhoCasoDeUso adicionaNoCarrinhoCasoDeUso,
                             ConsultaStatusPagamentoCasoDeUso consultaStatusPagamentoCasoDeUso,
-                            AtualizaStatusPagamentoCasoDeUso atualizaStatusPagamentoCasoDeUso){
+                            AtualizaStatusPagamentoCasoDeUso atualizaStatusPagamentoCasoDeUso,
+                            AtualizaPedidoCasoDeUso atualizaPedidoCasoDeUso,
+                            BuscaPedidosOrdenadosCasoDeUso buscaPedidosOrdenadosCasoDeUso){
         this.buscaPedidosClienteCasoDeUso = buscaPedidosClienteCasoDeUso;
         this.buscaPedidosCasoDeUso = buscaPedidosCasoDeUso;
         this.pagaPedidoCasoDeUso = pagaPedidoCasoDeUso;
         this.adicionaNoCarrinhoCasoDeUso = adicionaNoCarrinhoCasoDeUso;
         this.consultaStatusPagamentoCasoDeUso = consultaStatusPagamentoCasoDeUso;
         this.atualizaStatusPagamentoCasoDeUso = atualizaStatusPagamentoCasoDeUso;
+        this.atualizaPedidoCasoDeUso = atualizaPedidoCasoDeUso;
+        this.buscaPedidosOrdenadosCasoDeUso = buscaPedidosOrdenadosCasoDeUso;
     }
 
     @GetMapping()
@@ -85,5 +93,26 @@ public class PedidoController {
     public ResponseEntity<Boolean> atualizaPagamento(@RequestBody @Valid AtualizaStatusPagamentoRequestDto requestDto) {
         var statusPagamento = atualizaStatusPagamentoCasoDeUso.atualizaStatusPagamento(requestDto);
         return ResponseEntity.status(HttpStatus.OK).body(statusPagamento);
+    }
+
+    @PutMapping("/atualizar/{id}")
+    public ResponseEntity<PedidoDto> atualizaPedido(@PathVariable @Valid Long id) {
+        PedidoDto pedidoDto = atualizaPedidoCasoDeUso.atualizaPedido(id);
+        return ResponseEntity.status(HttpStatus.OK).body(pedidoDto);
+    }
+
+    @GetMapping("/ordenados")
+    public ResponseEntity<Page<PedidoDto>> buscaPedidosOrdenados(@PageableDefault Pageable pageable) {
+        List<PedidoDto> pedidos = buscaPedidosOrdenadosCasoDeUso.buscaPedidosOrdenados();
+        List<PedidoDto> listaOrdenada = new ArrayList<>();
+
+        pedidos.stream().filter(pedidosOrdenados -> pedidosOrdenados.statusPedido() == StatusPedido.PRONTO).forEach(listaOrdenada::add);
+        pedidos.stream().filter(pedidosOrdenados -> pedidosOrdenados.statusPedido() == StatusPedido.EM_PREPARO).forEach(listaOrdenada::add);
+        pedidos.stream().filter(pedidosOrdenados -> pedidosOrdenados.statusPedido() == StatusPedido.RECEBIDO).forEach(listaOrdenada::add);
+
+        return ResponseEntity.status(HttpStatus.OK).body(
+                new PageImpl<PedidoDto>(listaOrdenada, pageable, pedidos.size())
+        );
+
     }
 }

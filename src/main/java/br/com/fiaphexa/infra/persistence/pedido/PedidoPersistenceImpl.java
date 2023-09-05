@@ -3,6 +3,7 @@ package br.com.fiaphexa.infra.persistence.pedido;
 import br.com.fiaphexa.aplicacao.dtos.PageInfoDto;
 import br.com.fiaphexa.aplicacao.dtos.pedido.PedidoDto;
 import br.com.fiaphexa.aplicacao.repositorios.pedido.PedidoRepositoryService;
+import br.com.fiaphexa.dominio.enuns.StatusPedido;
 import br.com.fiaphexa.infra.entity.PedidoEntity;
 import br.com.fiaphexa.infra.repository.PostGresPedidoRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -57,5 +58,31 @@ public class PedidoPersistenceImpl implements PedidoRepositoryService {
     public List<PedidoDto> buscaPedidos(PageInfoDto page) {
         Pageable pageable = PageRequest.of(page.getPageNumber(), page.getPageSize());
         return postGresPedidoRepository.findAll(pageable).stream().map(PedidoEntity::toPedidoDto).toList();
+    }
+
+    @Override
+    public List<PedidoDto> buscaTodosPedidosPorCpf(String cpf) {
+        return postGresPedidoRepository.findallByCpf(cpf).stream().map(PedidoEntity::toPedidoDto).toList();
+    }
+
+    @Override
+    public PedidoDto atualizaPedido(PedidoDto pedidoDto, StatusPedido statusPedido) {
+        PedidoEntity pedidoEntity = new PedidoEntity(pedidoDto);
+
+        pedidoEntity.setStatusPedido(statusPedido);
+        PedidoEntity pedidoAtualizado = postGresPedidoRepository.save(pedidoEntity);
+
+        return pedidoAtualizado.toPedidoDto();
+    }
+
+    @Override
+    public List<PedidoDto> buscaPedidosOrdenados() {
+        return postGresPedidoRepository.findAll().stream().map(PedidoEntity::toPedidoDto).toList();
+    }
+
+    @Override
+    public void removePedidos(List<PedidoDto> pedidoDtoList) {
+        List<Long> pedidoIdList = pedidoDtoList.stream().map(PedidoDto::id).toList();
+        postGresPedidoRepository.deleteAllById(pedidoIdList);
     }
 }

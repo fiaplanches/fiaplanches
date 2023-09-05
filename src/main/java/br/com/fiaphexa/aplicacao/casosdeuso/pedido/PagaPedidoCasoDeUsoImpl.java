@@ -34,7 +34,7 @@ public class PagaPedidoCasoDeUsoImpl implements PagaPedidoCasoDeUso {
         var pedidoDto = pedidoRepositoryService.buscaPedidoPorId(pagamentoRequestDto.idPedido())
                 .orElseThrow(() -> new EntityNotFoundException("Pedido não encontrado"));
 
-        webhookGateway.enviaPagamento(new EnviaPagamentoDto(MetodoPagamentoEnum.QR_CODE, Long.toString(pedidoDto.id())));
+        webhookGateway.enviaPagamento(new EnviaPagamentoDto(MetodoPagamentoEnum.PIX, Long.toString(pedidoDto.id())));
     }
 
 //    private BigDecimal calculaValorTotal(List<Produto> produtos) {

@@ -58,4 +58,14 @@ public class PedidoBeanConfig {
         return new AtualizaStatusPagamentoCasoDeUsoImpl(
                 pedidoRepositoryService);
     }
+
+    @Bean
+    public AtualizaPedidoCasoDeUso atualizaPedidoCasoDeUso(PedidoRepositoryService pedidoRepositoryService){
+        return new AtualizaPedidoCasoDeUsoImpl(pedidoRepositoryService);
+    }
+
+    @Bean
+    public BuscaPedidosOrdenadosCasoDeUso buscaPedidoOrdenadoCasoDeUso(PedidoRepositoryService pedidoRepositoryService){
+        return new BuscaPedidosOrdenadosCasoDeUsoImpl(pedidoRepositoryService);
+    }
 }
