@@ -1,5 +1,7 @@
 # Projeto FiapLanches
 
+teste
+
 Este é o repositório do Projeto FiapLanches, uma aplicação incrível desenvolvida pela equipe Grupo 48. O projeto consiste em uma aplicação web que fornece serviços relacionados a uma lanchonete que está informatizando seus processos.
 
 ## Instruções de Instalação
