@@ -16,7 +16,7 @@ on:
 
 env:
   AWS_REGION: us-east-1                   
-  ECR_REPOSITORY: 516194196157.dkr.ecr.us-east-1.amazonaws.com/fiap-lanches:latest
+  ECR_REPOSITORY: 516194196157.dkr.ecr.us-east-1.amazonaws.com/fiap-lanches
   
 jobs:
   build:
