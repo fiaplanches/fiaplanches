@@ -2,7 +2,7 @@ FROM maven:latest
 
 WORKDIR /app
 RUN rm -rf /app/*
-COPY /fiaplanches /app
+COPY . /app
 RUN mvn clean install -DskipTests
 RUN mkdir jar
 RUN mv /app/target/fiaphexa-0.0.1-SNAPSHOT.jar /app/jar/fiaplanches-app.jar
