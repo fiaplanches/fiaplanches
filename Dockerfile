@@ -1,4 +1,4 @@
-FROM maven:latest
+FROM maven:3.9.3
 
 WORKDIR /app
 RUN rm -rf /app/*
