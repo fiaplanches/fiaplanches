@@ -9,13 +9,17 @@ import br.com.fiaphexa.aplicacao.casosdeuso.abstracoes.clientes.RemoveClienteCas
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
+import lombok.extern.slf4j.Slf4j;
 import org.hibernate.validator.constraints.br.CPF;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
 @RequestMapping("/cliente")
+@Slf4j
 public class ClienteController {
 
     private final CadastraClienteCasoDeUso cadastraClienteCasoDeUso;
@@ -32,10 +36,10 @@ public class ClienteController {
 
     @PostMapping("/criarCliente")
     public ResponseEntity<ClienteResponseDto> criarCliente(@RequestBody @Valid ClienteRequestDto clienteRequestDto, UriComponentsBuilder uriBuilder){
+        log.info("Executando criarCliente");
         var clienteDto = cadastraClienteCasoDeUso.cadastra(clienteRequestDto.toClienteDto());
         var clienteResponse = ClienteResponseDto.toClienteResponseDto(clienteDto);
-        var uri = uriBuilder.path("/cliente/{cpf}").buildAndExpand(clienteResponse.cpf()).toUri();
-        return ResponseEntity.created(uri).body(clienteResponse);
+        return ResponseEntity.status(HttpStatus.CREATED).body(clienteResponse);
     }
 
     @GetMapping(path = "/{cpf}")

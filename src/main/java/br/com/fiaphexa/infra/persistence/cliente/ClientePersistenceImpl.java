@@ -15,8 +15,6 @@ public class ClientePersistenceImpl implements ClienteRepositoryService {
 
     private final PostGresClienteRepository postGresClienteRepository;
 
-    private static final  String  CLIENTE_NAO_ENCONTRADO = "Cliente não encontrado";
-
     public ClientePersistenceImpl(PostGresClienteRepository postGresClienteRepository) {
         this.postGresClienteRepository = postGresClienteRepository;
     }
@@ -35,15 +33,5 @@ public class ClientePersistenceImpl implements ClienteRepositoryService {
     @Override
     public void removeCliente(String cpf) {
         postGresClienteRepository.deleteByCpf(cpf);
-    }
-
-    public ClienteDto atualizaCliente(ClienteDto clienteDto) {
-
-        var clienteEntity = postGresClienteRepository.findByCpf(clienteDto.cpf()).orElseThrow(
-                () -> new EntityNotFoundException(CLIENTE_NAO_ENCONTRADO)
-        );
-        BeanUtils.copyProperties(clienteDto, clienteEntity, "id");
-        var clienteEntityAtualizado = postGresClienteRepository.save(clienteEntity);
-        return clienteEntityAtualizado.toClienteDto();
     }
 }

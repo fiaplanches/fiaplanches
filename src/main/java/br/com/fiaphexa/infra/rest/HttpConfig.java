@@ -1,4 +1,4 @@
-package br.com.fiaphexa.infra.config;
+package br.com.fiaphexa.infra.rest;
 
 import br.com.fiaphexa.infra.gateways.WebhookGateway;
 import org.springframework.beans.factory.annotation.Value;

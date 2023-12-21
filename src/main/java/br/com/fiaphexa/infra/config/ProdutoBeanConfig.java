@@ -1,4 +1,4 @@
-package br.com.fiaphexa.infra.bean;
+package br.com.fiaphexa.infra.config;
 
 import br.com.fiaphexa.aplicacao.casosdeuso.abstracoes.produtos.AtualizaProdutoCasoDeUso;
 import br.com.fiaphexa.aplicacao.casosdeuso.abstracoes.produtos.CadastraProdutoCasoDeUso;
