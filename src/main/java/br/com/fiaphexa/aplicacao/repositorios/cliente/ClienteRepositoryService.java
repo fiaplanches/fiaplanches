@@ -11,6 +11,4 @@ public interface ClienteRepositoryService {
     Optional<ClienteDto> procuraClientePorCpf(String cpf);
 
     void removeCliente(String cpf);
-
-    ClienteDto atualizaCliente(ClienteDto clienteDto);
 }
